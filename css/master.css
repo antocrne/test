@@ -12,6 +12,7 @@ body {
     --colorbg: #f0f0f0;
     --color1: #101010;
     color: var(--color1);
+    background-color: var(--colorbg);
 }
 
 a {
@@ -93,7 +94,6 @@ a {
     transform: rotate(-90deg);
     animation-name: test;
     animation-duration: 0.5s;
-    animation-timing-function: cubic-bezier(.17,.67,.83,.67);
     opacity: 1;
     overflow: hidden;
     right: 0;
@@ -174,4 +174,20 @@ a {
     100% {
       transform: rotate(360deg);
     }
+  }
+
+  .archives__title h2 {
+      font-family: var(--font1);
+      font-weight: 500;
+      font-style: normal;
+      position: absolute;
+      z-index: 3;
+      bottom: 5%;
+      right: 5%;
+      font-size: 5rem;
+      letter-spacing: 3px;
+      color: var(--color1);
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color:var(--color1);
   }

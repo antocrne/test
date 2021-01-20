@@ -2,6 +2,10 @@
     .swiper-pagination {
         display: none;
     }
+
+    .swiper-container {
+        margin-top: 10%;
+    }
     .slide__content {
         width: 90%;
         margin: auto;
@@ -36,5 +40,14 @@
     .scrolldown img {
         width: 25vw;
         animation: 15s linear infinite rotation1;
+    }
+
+    .archives__title h2 {
+        z-index: 3;
+        top: 10%;
+        left: 5%;
+        font-size: 3rem;
+        -webkit-text-stroke-width: 0.5px;
+        bottom: auto;
     }
 }
