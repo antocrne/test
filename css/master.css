@@ -230,9 +230,10 @@ a {
     -ms-transform: translate(-50%, -50%);
 }
 
-.explore__link a {
+.explore__link span {
     font-family: var(--font1);
     font-size: 17px;
+    cursor: pointer;
 }
 
 .js-reveal {
@@ -404,6 +405,7 @@ a {
     position: absolute;
     top: 25px;
     right: 35px;
+    z-index: 3;
 }
 
 .back__btn a {
