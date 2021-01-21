@@ -289,7 +289,7 @@ a {
     right: 0;
 }
 
-@keyframes reaveal1 {
+@keyframes reveal1 {
     from {
         opacity: 0;
         right: 20px;
