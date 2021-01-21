@@ -8,13 +8,14 @@
     <link rel="stylesheet" href="css/responsive.css">
   
 </head>
-<body>
+<body class="scroll__move">
+    
     <div class="header">
         <div class="nav__brand"><a href="index.html"><h1 class="brand"></h1></a></div>
         <div class="navbar">
-            <a href="#" class="nav__link">About</a>
+            <a href="works.html" class="nav__link">Works</a>
             <a href="archives.html" class="nav__link">Archives</a>
-            <a href="#" class="nav__link">Works</a>
+            <a href="#" class="nav__link">About</a>
         </div>
         <div class="resp__menu">
             <div class="toggle__menu">
@@ -29,26 +30,43 @@
             <div class="nav__brand"><a href="index.html"><h1 class="brand" id="brand__overlay"></h1></a></div>
             <div class="overlay__nav">
                 <a href="#">About</a>
-                <a href="#">Works</a>
+                <a href="works.html">Works</a>
                 <a href="archives.html">Archives</a>
+            </div>
+            <div class="overlay__socials">
+                <a href="#"><img src="img/socials/youtube.svg" alt=""></a>
+                <a href="#"><img src="img/socials/insta.svg" alt=""></a>
+                <a href="#"><img src="img/socials/twitter.svg" alt=""></a>
             </div>
             
         </div>
     </div>
     <div class="main__content">
-      <div class="index__titles">
-          <h1 id="title1">Creative</h1>
-          <h1 id="title2">Filmmaker & Photographer</h1>
+        <div class="index__titles">
+            <h1 id="title1">Creative</h1>
+            <h1 id="title2">Filmmaker & Photographer</h1>
+        </div>
+        <div class="explore">
+            <img src="img/circle/explore.png" alt="">
+            <div class="explore__link">
+                <a href="archives.html">Scroll</a>
+            </div>
+        </div>
       </div>
-      <div class="explore">
-          <img src="img/circle/explore.png" alt="">
-          <div class="explore__link">
-              <a href="archives.html">Click me!</a>
-          </div>
-      </div>
-    </div>
-   
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="js/script.js"></script>
+<script>
+    window.addEventListener('mousewheel', function() {
+   
+
+    $(".main__content").animate({opacity: 0});
+    setTimeout(function(){ 
+        window.location.href = "archives.html";
+        }, 1000);
+        
+    });
+    
+</script>
 </body>
 </html>
