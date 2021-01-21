@@ -58,13 +58,16 @@
 <script src="js/script.js"></script>
 <script>
     window.addEventListener('mousewheel', function() {
-   
-
     $(".main__content").animate({opacity: 0});
     setTimeout(function(){ 
         window.location.href = "archives.html";
-        }, 1000);
-        
+        }, 1000);  
+    });
+    window.addEventListener('scroll', function() {
+    $(".main__content").animate({opacity: 0});
+    setTimeout(function(){ 
+        window.location.href = "archives.html";
+        }, 1000);  
     });
     
 </script>
