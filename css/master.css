@@ -196,7 +196,6 @@ a {
 
 .explore {
     position: fixed;
-    mix-blend-mode: exclusion;
     bottom: 5%;
     right: 5%;
     z-index: 2;
