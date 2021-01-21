@@ -1,3 +1,14 @@
+$('#toggle').click(function() {
+    $(this).toggleClass('active');
+    $(".menu__overlay").toggleClass('visible');
+});
+$('.js-tilt').tilt({
+    maxTilt: 12,
+    scale: 1.05,
+    speed: 800,
+    transition: true
+})
+
 var swiper = new Swiper('.slider__index', {
     direction: 'vertical',
     slidesPerView: 1,

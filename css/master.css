@@ -9,16 +9,178 @@ body {
     font-style: normal;
     overflow: hidden;
     --font1: orpheuspro, serif;
-    --colorbg: #f0f0f0;
+    --colorbg: #f1f1f1;
     --color1: #101010;
     color: var(--color1);
     background-color: var(--colorbg);
 }
 
+body:after {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-image: url("../img/bg/noise.gif");
+    opacity: 0.05;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
 a {
     text-decoration: none;
     color: var(--color1);
 }
+
+.nav__brand {
+    position: absolute;
+    z-index: 3;
+    top: 10px;
+    left: 25px;
+}
+
+.brand:before {
+    content: "Antoine Corniere";
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.navbar {
+    transform: rotate(-90deg);
+    position: absolute;
+    bottom: 15%;
+    left: -6%;
+}
+
+.nav__link {
+    font-weight: 500;
+    font-size: 18px;
+    margin-left: 20px;
+    letter-spacing: 1px;
+}
+
+.resp__menu {
+    display: none;
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    z-index: 5;
+}
+
+.toggle__menu {
+    background-color: transparent
+}
+
+#top, #middle, #bottom{
+    display: block;
+    width: 25px;
+    height: 1px;
+    background-color: var(--color1);
+    margin: 7px;
+    transition: ease-in-out 0.5s;
+}
+
+.active {
+    transition: ease-in-out 0.5s;
+
+   
+}
+
+.active > #top {
+    transition: ease-in-out 0.5s;
+    transform: translateY(8px) rotate(45deg);
+    background-color: var(--colorbg);
+}
+.active > #middle {
+   transition: ease-in-out 0.5s;
+   width: 0;
+   opacity: 0;
+   background-color: var(--colorbg);
+}
+
+.active > #bottom {
+    transition: ease-in-out 0.5s;
+    transform: translateY(-8px) rotate(-45deg);
+    background-color: var(--colorbg);
+}
+
+#brand__overlay {
+    color: var(--colorbg);
+}
+
+.menu__overlay {
+    overflow: hidden;
+    z-index: 4;
+    color: var(--colorbg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0vh;
+    background-color: var(--color1);
+    visibility: hidden;
+    transition: ease-in-out 0.5s;
+    
+}
+
+.menu__overlay:after {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-image: url("../img/bg/noise.gif");
+    opacity: 0.05;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.visible {
+    height: 100vh;
+    visibility: visible;
+    transition: ease-in-out 0.5s;
+}
+
+.overlay__nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    padding-left: 10%;
+}
+
+.overlay__nav a {
+    color: var(--colorbg);
+    font-size: 5rem;
+    font-weight: 500;
+    font-style: normal;
+    margin: 3%;
+}
+
+.index__titles {
+      font-family: var(--font1);
+      font-size: 2.5rem;
+      font-weight: 500;
+      letter-spacing: 3px;
+      margin-right: auto;
+      margin-left: 15%;
+}
+
+#title1 {
+    color: var(--color1);
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color:var(--color1);
+}
+
 
 .title {
     position: absolute;
@@ -29,6 +191,35 @@ a {
 
 .text__center {
     text-align: center;
+}
+
+
+.explore {
+    position: fixed;
+    mix-blend-mode: exclusion;
+    bottom: 5%;
+    right: 5%;
+    z-index: 2;
+}
+
+.explore img {
+    z-index: 2;
+    width: 9vw;
+    animation: 15s linear infinite rotation1;
+}
+
+.explore__link {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.explore__link a {
+    font-family: var(--font1);
+    font-size: 14px;
 }
 
 .main__content {
@@ -92,14 +283,14 @@ a {
 .swiper-pagination > .current {
     position: relative;
     transform: rotate(-90deg);
-    animation-name: test;
+    animation-name: reveal1;
     animation-duration: 0.5s;
     opacity: 1;
     overflow: hidden;
     right: 0;
 }
 
-@keyframes test {
+@keyframes reaveal1 {
     from {
         opacity: 0;
         right: 20px;
@@ -191,3 +382,7 @@ a {
       -webkit-text-stroke-width: 1px;
       -webkit-text-stroke-color:var(--color1);
   }
+
+
+
+ 
