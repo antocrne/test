@@ -547,7 +547,7 @@
         .pagination__c {
             display: flex;
             font-size: 3rem;
-            bottom: 5%;
+            bottom: 0%;
             top: auto;
             z-index: 3;
         }
@@ -595,7 +595,7 @@
         }
     
         .img__p img {
-            height: 45vh;
+            height: 50vh;
             object-fit: cover;
         }
         
