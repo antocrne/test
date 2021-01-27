@@ -152,14 +152,6 @@
         margin: 5%;
     }
 
-    .overlay__socials {
-        position: absolute;
-        bottom: 10%;
-        right: 5%;
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-    }
     
 
     .index__titles {
@@ -353,16 +345,7 @@
         margin: 5%;
     }
 
-    .overlay__socials {
-        position: absolute;
-        bottom: 10%;
-        right: 5%;
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-    }
     
-
     .index__titles {
         font-family: var(--font1);
         font-size: 1.3rem;
@@ -556,15 +539,8 @@
         margin: 5%;
     }
 
-    .overlay__socials {
-        position: absolute;
-        bottom: 20%;
-        right: 5%;
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-    }
     
+   
 
     .index__titles {
         font-family: var(--font1);
@@ -757,14 +733,6 @@
         margin: 5%;
     }
 
-    .overlay__socials {
-        position: absolute;
-        bottom: 10%;
-        right: 5%;
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-    }
     
 
     .index__titles {

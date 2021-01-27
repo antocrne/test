@@ -22,7 +22,7 @@ var swiper = new Swiper('.slider__index', {
     direction: 'vertical',
     slidesPerView: 1,
     spaceBetween: 30,
-    speed: 800,
+    speed: 1000,
     loop: true,
     mousewheel: true,
     pagination: {
@@ -41,7 +41,7 @@ var swiper = new Swiper('.swiper__content', {
     direction: 'vertical',
     slidesPerView: 1,
     spaceBetween: 30,
-    speed: 800,
+    speed: 1000,
     loop: true,
     mousewheel: true,
     pagination: {
