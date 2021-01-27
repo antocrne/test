@@ -52,7 +52,7 @@
     }
     
 
-    .explore__link span {
+    .explore__link a {
         font-family: var(--font1);
         font-size: 15px;
         cursor: pointer;
@@ -189,7 +189,7 @@
     }
     
 
-    .explore__link span {
+    .explore__link a {
         font-size: 10px;
     }
 
@@ -385,7 +385,7 @@
     }
     
 
-    .explore__link span {
+    .explore__link a {
         font-size: 10px;
     }
 
@@ -578,7 +578,7 @@
     }
     
 
-    .explore__link span {
+    .explore__link a {
         font-size: 10px;
     }
 
