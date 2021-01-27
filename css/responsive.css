@@ -647,8 +647,8 @@
 
     .pagination__c {
         display: flex;
-        font-size: 3rem;
-        bottom: -5%;
+        font-size: 2rem;
+        bottom: 0;
         top: auto;
         z-index: 3;
     }
@@ -668,7 +668,7 @@
         padding: 15px;
         color: var(--color1);
         -webkit-text-fill-color: transparent;
-        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-width: 0.5px;
         -webkit-text-stroke-color:var(--color1);
         mix-blend-mode: exclusion;
         overflow: hidden;
@@ -683,7 +683,7 @@
          padding: 15px;
          color: var(--color1);
          -webkit-text-fill-color: transparent;
-         -webkit-text-stroke-width: 1px;
+         -webkit-text-stroke-width: 0.5px;
          -webkit-text-stroke-color:var(--color1);
          overflow: hidden;
          width: 50px;
