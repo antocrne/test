@@ -450,7 +450,7 @@
     }
 
     .swiper__content {
-        height: 60%;
+        height: 65%;
         margin-top: 15%;
     }
 
@@ -459,7 +459,7 @@
     .pagination__c {
         display: flex;
         font-size: 2.6rem;
-        bottom: -5%;
+        bottom: 0%;
         top: auto;
         z-index: 3;
     }
