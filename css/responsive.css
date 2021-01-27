@@ -450,13 +450,11 @@
         margin-top: 15%;
     }
 
-    
-    
 
     .pagination__c {
         display: flex;
         font-size: 3rem;
-        bottom: 0%;
+        bottom: -5%;
         top: auto;
         z-index: 3;
     }
