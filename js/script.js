@@ -10,6 +10,8 @@ $(".appear").ready(function() {
 $('#toggle').click(function() {
     $(this).toggleClass('active');
     $(".menu__overlay").toggleClass('visible');
+    $(".oLink").toggleClass('is-appear');
+    $(".overlay__footer").toggleClass('is-opacity');
 });
 $('.js-tilt').tilt({
     maxTilt: 12,
