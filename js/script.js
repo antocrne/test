@@ -1,188 +1,261 @@
-var cursor = {
-    delay: 8,
-    _x: 0,
-    _y: 0,
-    endX: (window.innerWidth / 2),
-    endY: (window.innerHeight / 2),
-    cursorVisible: true,
-    cursorEnlarged: false,
-    $dot: document.querySelector('.cursor-dot'),
-    $outline: document.querySelector('.cursor-dot-outline'),
-    
-    init: function() {
-        // Set up element sizes
-        this.dotSize = this.$dot.offsetWidth;
-        this.outlineSize = this.$outline.offsetWidth;
-        
-        this.setupEventListeners();
-        this.animateDotOutline();
-    },
-    
-  //     updateCursor: function(e) {
-  //         var self = this;
-        
-  //         console.log(e)
-        
-  //         // Show the cursor
-  //         self.cursorVisible = true;
-  //         self.toggleCursorVisibility();
-  
-  //         // Position the dot
-  //         self.endX = e.pageX;
-  //         self.endY = e.pageY;
-  //         self.$dot.style.top = self.endY + 'px';
-  //         self.$dot.style.left = self.endX + 'px';
-  //     },
-    
-    setupEventListeners: function() {
-        var self = this;
-        
-        // Anchor hovering
-        document.querySelectorAll('a').forEach(function(el) {
-            el.addEventListener('mouseover', function() {
-                self.cursorEnlarged = true;
-                self.toggleCursorSize();
-            });
-            el.addEventListener('mouseout', function() {
-                self.cursorEnlarged = false;
-                self.toggleCursorSize();
-            });
-        });
-        
-        // Click events
-        document.addEventListener('mousedown', function() {
-            self.cursorEnlarged = true;
-            self.toggleCursorSize();
-        });
-        document.addEventListener('mouseup', function() {
-            self.cursorEnlarged = false;
-            self.toggleCursorSize();
-        });
-  
-  
-        document.addEventListener('mousemove', function(e) {
-            // Show the cursor
-            self.cursorVisible = true;
-            self.toggleCursorVisibility();
-  
-            // Position the dot
-            self.endX = e.pageX;
-            self.endY = e.pageY;
-            self.$dot.style.top = self.endY + 'px';
-            self.$dot.style.left = self.endX + 'px';
-        });
-        
-        // Hide/show cursor
-        document.addEventListener('mouseenter', function(e) {
-            self.cursorVisible = true;
-            self.toggleCursorVisibility();
-            self.$dot.style.opacity = 1;
-            self.$outline.style.opacity = 1;
-        });
-        
-        document.addEventListener('mouseleave', function(e) {
-            self.cursorVisible = true;
-            self.toggleCursorVisibility();
-            self.$dot.style.opacity = 0;
-            self.$outline.style.opacity = 0;
-        });
-    },
-    
-    animateDotOutline: function() {
-        var self = this;
-        
-        self._x += (self.endX - self._x) / self.delay;
-        self._y += (self.endY - self._y) / self.delay;
-        self.$outline.style.top = self._y + 'px';
-        self.$outline.style.left = self._x + 'px';
-        
-        requestAnimationFrame(this.animateDotOutline.bind(self));
-    },
-    
-    toggleCursorSize: function() {
-        var self = this;
-        
-        if (self.cursorEnlarged) {
-            self.$dot.style.transform = 'translate(-50%, -50%) scale(0.75)';
-            self.$outline.style.transform = 'translate(-50%, -50%) scale(1.5)';
-        } else {
-            self.$dot.style.transform = 'translate(-50%, -50%) scale(1)';
-            self.$outline.style.transform = 'translate(-50%, -50%) scale(1)';
+
+
+
+{
+    // body element
+    const body = document.body;
+
+    // helper functions
+    const MathUtils = {
+        // linear interpolation
+        lerp: (a, b, n) => (1 - n) * a + n * b,
+        // distance between two points
+        distance: (x1,y1,x2,y2) => Math.hypot(x2-x1, y2-y1)
+    }
+
+    // get the mouse position
+    const getMousePos = (ev) => {
+        let posx = 0;
+        let posy = 0;
+        if (!ev) ev = window.event;
+        if (ev.pageX || ev.pageY) {
+            posx = ev.pageX;
+            posy = ev.pageY;
         }
-    },
+        else if (ev.clientX || ev.clientY) 	{
+            posx = ev.clientX + body.scrollLeft + docEl.scrollLeft;
+            posy = ev.clientY + body.scrollTop + docEl.scrollTop;
+        }
+        return {x: posx, y: posy};
+    }
+
+    // mousePos: current mouse position
+    // cacheMousePos: previous mouse position
+    // lastMousePos: last last recorded mouse position (at the time the last image was shown)
+    let mousePos = lastMousePos = cacheMousePos = {x: 0, y: 0};
     
-    toggleCursorVisibility: function() {
-        var self = this;
-        
-        if (self.cursorVisible) {
-            self.$dot.style.opacity = 1;
-            self.$outline.style.opacity = 1;
-        } else {
-            self.$dot.style.opacity = 0;
-            self.$outline.style.opacity = 0;
+    // update the mouse position
+    window.addEventListener('mousemove', ev => mousePos = getMousePos(ev));
+    
+    // gets the distance from the current mouse position to the last recorded mouse position
+    const getMouseDistance = () => MathUtils.distance(mousePos.x,mousePos.y,lastMousePos.x,lastMousePos.y);
+
+    class Image {
+        constructor(el) {
+            this.DOM = {el: el};
+            // image deafult styles
+            this.defaultStyle = {
+                scale: 1,
+                x: 0,
+                y: 0,
+                opacity: 0
+            };
+            // get sizes/position
+            this.getRect();
+            // init/bind events
+            this.initEvents();
+        }
+        initEvents() {
+            // on resize get updated sizes/position
+            window.addEventListener('resize', () => this.resize());
+        }
+        resize() {
+            // reset styles
+            TweenMax.set(this.DOM.el, this.defaultStyle);
+            // get sizes/position
+            this.getRect();
+        }
+        getRect() {
+            this.rect = this.DOM.el.getBoundingClientRect();
+        }
+        isActive() {
+            // check if image is animating or if it's visible
+            return TweenMax.isTweening(this.DOM.el) || this.DOM.el.style.opacity != 0;
         }
     }
-  }
-  
-  cursor.init();
-$(".appear").ready(function() {
+
+    class ImageTrail {
+        constructor() {
+            // images container
+            this.DOM = {content: document.querySelector('.content')};
+            // array of Image objs, one per image element
+            this.images = [];
+            [...this.DOM.content.querySelectorAll('img')].forEach(img => this.images.push(new Image(img)));
+            // total number of images
+            this.imagesTotal = this.images.length;
+            // upcoming image index
+            this.imgPosition = 0;
+            // zIndex value to apply to the upcoming image
+            this.zIndexVal = 1;
+            // mouse distance required to show the next image
+            this.threshold = 100;
+            // render the images
+            requestAnimationFrame(() => this.render());
+        }
+        render() {
+            // get distance between the current mouse position and the position of the previous image
+            let distance = getMouseDistance();
+            // cache previous mouse position
+            cacheMousePos.x = MathUtils.lerp(cacheMousePos.x || mousePos.x, mousePos.x, 0.1);
+            cacheMousePos.y = MathUtils.lerp(cacheMousePos.y || mousePos.y, mousePos.y, 0.1);
+
+            // if the mouse moved more than [this.threshold] then show the next image
+            if ( distance > this.threshold ) {
+                this.showNextImage();
+
+                ++this.zIndexVal;
+                this.imgPosition = this.imgPosition < this.imagesTotal-1 ? this.imgPosition+1 : 0;
+                
+                lastMousePos = mousePos;
+            }
+
+            // check when mousemove stops and all images are inactive (not visible and not animating)
+            let isIdle = true;
+            for (let img of this.images) {
+                if ( img.isActive() ) {
+                    isIdle = false;
+                    break;
+                }
+            }
+            // reset z-index initial value
+            if ( isIdle && this.zIndexVal !== 1 ) {
+                this.zIndexVal = 1;
+            }
+
+            // loop..
+            requestAnimationFrame(() => this.render());
+        }
+        showNextImage() {
+            // show image at position [this.imgPosition]
+            const img = this.images[this.imgPosition];
+            // kill any tween on the image
+            TweenMax.killTweensOf(img.DOM.el);
+
+            new TimelineMax()
+            // show the image
+            .set(img.DOM.el, {
+                startAt: {opacity: 0, scale: 1},
+                opacity: 1,
+                scale: 1,
+                zIndex: this.zIndexVal,
+                x: cacheMousePos.x - img.rect.width/2,
+                y: cacheMousePos.y - img.rect.height/2
+            }, 0)
+            // animate position
+            .to(img.DOM.el, 0.9, {
+                ease: Expo.easeOut,
+                x: mousePos.x - img.rect.width/2,
+                y: mousePos.y - img.rect.height/2
+            }, 0)
+            // then make it disappear
+            .to(img.DOM.el, 1, {
+                ease: Power1.easeOut,
+                opacity: 0
+            }, 0.4)
+            // scale down the image
+            .to(img.DOM.el, 1, {
+                ease: Quint.easeOut,
+                scale: 1
+            }, 0.4);
+        }
+    }
     
-    $(".js-reveal").animate({
-        opacity: 1,
-      }, 1000, function() {
-        // Animation complete.
-      });
+   
+    /***********************************/
+    /********** Preload stuff **********/
+    
+    
+    // Preload images
+    const preloadImages = () => {
+        
+        return new Promise((resolve, reject) => {
+            imagesLoaded(document.querySelectorAll('.content__img'), resolve);
+
+        });
+
+        
+    };
+    
+    // And then..
+    preloadImages().then(() => {
+        // Remove the loader
+        //document.body.classList.remove('loading');
+        var el = document.getElementsByClassName( 'loading' );
+        $(el).removeClass('loading');
+        new ImageTrail();
+    });
+
+    
+    
+}
+
+
+
+$(".explore").click(function(){
+    var title1 = document.getElementById("t1");
+    var title2 = document.getElementById("t2");
+    var explore = document.getElementsByClassName('explore');
+    var tl = new TimelineMax();
+    tl.to(title1, 0.3, {top: "100px", ease: "power3.inOut"} );
+    tl.to(title2, 0.3, {delay: 0.01, top: "150px", ease: "power3.inOut"});
+    tl.to(explore, 0.3, {delay: 0.02, opacity: 0});
+    setTimeout(function(){ 
+        window.location.href = 'works.html';
+ }, 1300); 
+});
+
+
+
+$('.js-tilt').tilt({
+    maxTilt:        20,
+    easing:         "cubic-bezier(.03,.98,.52,.99)", 
+    scale:          1,    
+    speed:          500,   
+    transition:     true,   
+    reset:          true,  
+   
 })
 
-$('#toggle').click(function() {
-    $(this).toggleClass('active');
-    $(".menu__overlay").toggleClass('visible');
-    $(".oLink").toggleClass('is-appear');
-    $(".overlay__footer").toggleClass('is-opacity');
+$(".work__img").mouseover(function() {
+    var src = $(this).find('img').attr('src');
+    var t = $(this).find('h2').text();
+    var ht = $(this).find('.work__title');
+    $('.hover-bg__item').css('backgroundImage', 'url(' + src + ')');
+    $('.hover-bg').addClass('is-hover');
+    $(this).addClass('is-hover');
+    $(ht).addClass('is-hover');
+    $(ht).text(t);
+    $('.work__img').addClass('is-opacity');
+    $('.navbar').addClass('is-invert');
+    $('.brand').addClass('is-invert');
+    $('.scrolldown').addClass('is-invert');
 });
-$('.js-tilt').tilt({
-    maxTilt: 12,
-    scale: 1.05,
-    speed: 800,
-    transition: true
+
+$(".work__img").mouseleave(function() {
+    $('.hover-bg').removeClass('is-hover'); 
+    $('.work__title').removeClass('is-hover');
+    $(this).removeClass('is-hover');
+    $('.work__img').removeClass('is-opacity');
+    $('.navbar').removeClass('is-invert');
+    $('.brand').removeClass('is-invert');
+    $('.scrolldown').removeClass('is-invert');
+});
+
+
+$('.work__img').click(function(){
+    $('.work__overlay').addClass('is-visible');
+    $('.bg__dark').addClass('is-visible');
+    window.setTimeout(function(){$('.bg__white').addClass('is-visible');}, 500);
+    $('body').addClass('no-scroll');
+   
+});
+
+$('#close').click(function(){
+    $('.work__overlay').removeClass('is-visible');
+    window.setTimeout(function(){$('.bg__dark').removeClass('is-visible');}, 500);
+    $('.bg__white').removeClass('is-visible');
+    $('body').removeClass('no-scroll');
 });
 
 
 
-var swiper = new Swiper('.slider__index', {
-    direction: 'vertical',
-    slidesPerView: 1,
-    spaceBetween: 30,
-    speed: 1000,
-    loop: true,
-    mousewheel: true,
-    pagination: {
-        el: '.swiper-pagination',
-        type: 'custom',
-        renderCustom: function (swiper, current, total) {
-        /*return ('0' + current).slice(-2) + ' <span class="slide__bar"></span> ' + ('0' + total).slice(-2);*/
-            return '<span class="current">'+ ('0' + current).slice(-2) +'</span>' +
-                    ' <span class="slide__bar"></span> ' +
-                    '<span class="total">'+ ('0' + total).slice(-2) +'</span>';
-        }
-    },
-});
-
-var swiper = new Swiper('.swiper__content', {
-    direction: 'vertical',
-    slidesPerView: 1,
-    spaceBetween: 30,
-    speed: 1000,
-    loop: true,
-    mousewheel: true,
-    pagination: {
-        el: '.swiper-pagination',
-        type: 'custom',
-        renderCustom: function (swiper, current, total) {
-        /*return ('0' + current).slice(-2) + ' <span class="slide__bar"></span> ' + ('0' + total).slice(-2);*/
-            return '<span class="current__c">'+'<span class="current">'+ ('0' + current).slice(-2) +'</span>'+'</span>' +
-                    ' <span class="slide__bar"></span> ' +
-                    '<span class="total__c">'+'<span class="total">'+ ('0' + total).slice(-2) +'</span>'+'</span>';
-        }
-    },
-});
