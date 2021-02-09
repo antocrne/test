@@ -160,10 +160,10 @@
         }
     }
     
-   
+    
     /***********************************/
     /********** Preload stuff **********/
-    
+    /*
     
     // Preload images
     const preloadImages = () => {
@@ -180,12 +180,72 @@
     preloadImages().then(() => {
         // Remove the loader
         //document.body.classList.remove('loading');
-        var el = document.getElementsByClassName( 'loading-p' );
-        $(el).removeClass('loading-p');
+        var el = document.getElementsByClassName( 'loading' );
+        $(el).removeClass('loading');
         new ImageTrail();
     });
 
+    */
+
+   window.onload = function() {
+
+
+        const progressBar = document.querySelector('.js-loader-progress-bar')
+        const progressNumber = document.querySelector('.js-loader-progress-number')
+        
+        const imgLoad = imagesLoaded('body');
+        const imgTotal = imgLoad.images.length;
+        
+        let imgLoaded = 0;
+        let progressSpeed = 2;
+        let progressCount = 0;
+        let progressResult = 0;
+        
+        
+        let progressInit = setInterval(function () {
+        updateProgress();
+        }, 40);
+        
+        
+        imgLoad.on('progress', function (instance, image) {
+        imgLoaded++
+        })
+        
+        function updateProgress() {
+        
+        
+        progressCount += (imgLoaded / imgTotal) * progressSpeed;
+        
+        if(progressCount >= 100 && imgTotal > imgLoaded) {
+        
+            progressResult = 99;
+        } else if(progressCount > 99.9) {
+        
+            progressResult = 100;
+        } else {
+            
+            progressResult = progressCount;
+        }
+        
+        
+        progressBar.style.width = progressResult + '%';
+        progressNumber.innerText = Math.floor(progressResult) + '%';
+        
+        
+        if (progressResult >= 100 && imgTotal == imgLoaded) {
+            clearInterval(progressInit);
+            
+            
+            setTimeout(function () {
+            document.querySelector('body').classList.add('is-loaded');
+            }, 800);
+            
+
+            new ImageTrail();
+        }
+        }
     
+    }
     
 }
 

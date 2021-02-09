@@ -94,46 +94,57 @@ a:focus {
 
 
 
-.loading {
+.js-loader {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	visibility: visible;
+	opacity: 1;
 	background: var(--color-text);
-	width: 100vw;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-family: var(--font1);
+	transition: opacity 0.8s, visibility 0.8s;
+	z-index: 4;
   }
-  .loading .counter {
-	text-align: center;
+  .is-loaded .js-loader {
+	visibility: hidden;
+	opacity: 0;
   }
-  .loading .counter p {
-	font-size: 40px;
-	font-weight: 100;
-	color: var(--color-bg);
-  }
-  .loading .counter h2 {
-	color: var(--color-bg);
-	font-size: 60px;
-	margin-top: -10px;
-	font-family: var(--font1);
-	font-weight: 400;
-	font-style: normal;
-  }
-  .loading .counter span {
-	display: block;
-	background: var(--color-bg);
-	border: none;
+  
+  .js-loader-progress {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	width: 50%;
 	height: 1px;
+  }
+  .is-loaded .js-loader-progress {
+	visibility: hidden;
+	opacity: 0;
+  }
+  
+  .js-loader-progress-bar {
+	background: var(--color-bg);
+	height: 100%;
+	width: 0;
+	transition: width 0.4s;
+  }
+  
+  .js-loader-progress-number {
+	font-family: var(--font1);
+	font-weight: 300;
+	font-size: 5rem;
+	text-align: center;
+	color: var(--color-bg);
 	position: absolute;
-	top: 50%;
-	transform: translate(0, -50%);
+	top: 0;
+	left: 50%;
+	transform: translate(-50%, -50%);
   }
-  .loading .counter {
-	position: relative;
-	width: 400px;
-  }
-
-
+ 
 
 .nav {
 	position: fixed;
@@ -476,7 +487,7 @@ transition: .75s cubic-bezier(.25, .1, .25, 1);
 		display: none;
 	}
 
-	.content__title {
+	.content__title h1 {
 		font-size: 3.5rem;
 	}
 
@@ -519,7 +530,7 @@ transition: .75s cubic-bezier(.25, .1, .25, 1);
 
 @media screen and (max-width: 414px) {
 	
-	.content__title {
+	.content__title h1 {
 		font-size: 1.8rem;
 	}
 
@@ -551,12 +562,20 @@ transition: .75s cubic-bezier(.25, .1, .25, 1);
 		width: 32vw;
 	}
 
+	.js-loader-progress {
+		width: 80%;
+	}
+
+	.js-loader-progress-number {
+		font-size: 3rem;
+	}
+
 
 	
 }
 
 @media screen and (max-width: 320px) {
-	.content__title {
+	.content__title h1 {
 		font-size: 1.5rem;
 	}
 }

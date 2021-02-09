@@ -9,18 +9,7 @@
 	<body class="home">
 
 		<!--<div class="loading"></div>-->
-		<div class="loading" id="js-loader">
-			<div class="counter">
-			  <!--<p>Antoine Corniere</p>-->
-			  <h2>
-				<!--
-				h1.abs loading
-				h1.abs.color loading
-				-->
-			  </h2>
-			  <span></span>
-			</div>
-		  </div>
+	
  
 		
 		<div class="nav">
@@ -60,33 +49,19 @@
 					<img src="img/circles/explore.png" alt="">
 			</div>
 
-		
+			<div class="js-loader">
+				<div class="js-loader-progress">
+				  <div class="js-loader-progress-bar"></div>
+				  <div class="js-loader-progress-number"></div>
+				</div>
+			  </div>
 			
 		<script src="js/imagesloaded.pkgd.min.js"></script>
 		<script src="js/jquery3.5.1.min.js"></script>
 		<script src="js/TweenMax.min.js"></script>
 		<script src="js/script.js"></script>
 		<script>
-			$(document).ready(function() {
-  
-		var counter = 0;
-		var c = 0;
-		var i = setInterval(function(){
-			$(".loading .counter h2").html(c + "%");
-			$(".loading .counter span").css("width", c + "%");
-			//$(".loading-page .counter").css("background", "linear-gradient(to right, #f60d54 "+ c + "%,#0d0d0d "+ c + "%)");
-
-			/*
-			$(".loading-page .counter h1.color").css("width", c + "%");
-			*/
-			counter++;
-			c++;
-			
-			if(counter == 101) {
-				clearInterval(i);
-			}
-		}, 50);
-		});
+			  
 		</script>
 	
 	</body>
