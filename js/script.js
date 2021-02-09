@@ -180,8 +180,8 @@
     preloadImages().then(() => {
         // Remove the loader
         //document.body.classList.remove('loading');
-        var el = document.getElementsByClassName( 'loading' );
-        $(el).removeClass('loading');
+        var el = document.getElementsByClassName( 'loading-p' );
+        $(el).removeClass('loading-p');
         new ImageTrail();
     });
 
