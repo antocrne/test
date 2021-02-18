@@ -1,3 +1,56 @@
+var
+cursor = $(".cursor"),
+follower = $(".follower"),
+cWidth = 8, 
+fWidth = 50, 
+delay = 10, 
+mouseX = 0, 
+mouseY = 0,
+posX = 0, 
+posY = 0; 
+
+
+TweenMax.to({}, .001, {
+  repeat: -1,
+  onRepeat: function() {
+    posX += (mouseX - posX) / delay;
+    posY += (mouseY - posY) / delay;
+    
+    TweenMax.set(follower, {
+        css: {
+          left: posX - (fWidth / 2),
+          top: posY - (fWidth / 2)
+        }
+    });
+    
+    TweenMax.set(cursor, {
+        css: {
+          left: mouseX - (cWidth / 2),
+          top: mouseY - (cWidth / 2)
+        }
+    });
+  }
+});
+
+
+$(document).on("mousemove", function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+$("a").on({
+  "mouseenter": function() {
+    cursor.addClass("is-active");
+    follower.addClass("is-active");
+  },
+  "mouseleave": function() {
+    cursor.removeClass("is-active");
+    follower.removeClass("is-active");
+  }
+});
+
+
+
 
 
 
@@ -163,7 +216,7 @@
     
     /***********************************/
     /********** Preload stuff **********/
-    /*
+    
     
     // Preload images
     const preloadImages = () => {
@@ -181,141 +234,53 @@
         // Remove the loader
         //document.body.classList.remove('loading');
         var el = document.getElementsByClassName( 'loading' );
-        $(el).removeClass('loading');
+        $(el).remove();
         new ImageTrail();
     });
 
-    */
-
-   window.onload = function() {
-
-
-        const progressBar = document.querySelector('.js-loader-progress-bar')
-        const progressNumber = document.querySelector('.js-loader-progress-number')
-        
-        const imgLoad = imagesLoaded('body');
-        const imgTotal = imgLoad.images.length;
-        
-        let imgLoaded = 0;
-        let progressSpeed = 2;
-        let progressCount = 0;
-        let progressResult = 0;
-        
-        
-        let progressInit = setInterval(function () {
-        updateProgress();
-        }, 40);
-        
-        
-        imgLoad.on('progress', function (instance, image) {
-        imgLoaded++
-        })
-        
-        function updateProgress() {
-        
-        
-        progressCount += (imgLoaded / imgTotal) * progressSpeed;
-        
-        if(progressCount >= 100 && imgTotal > imgLoaded) {
-        
-            progressResult = 99;
-        } else if(progressCount > 99.9) {
-        
-            progressResult = 100;
-        } else {
-            
-            progressResult = progressCount;
-        }
-        
-        
-        progressBar.style.width = progressResult + '%';
-        progressNumber.innerText = Math.floor(progressResult) + '%';
-        
-        
-        if (progressResult >= 100 && imgTotal == imgLoaded) {
-            clearInterval(progressInit);
-            
-            
-            setTimeout(function () {
-            document.querySelector('body').classList.add('is-loaded');
-            }, 800);
-            
-
-            new ImageTrail();
-        }
-        }
     
-    }
+  
+    
+    
+    
+    $('.js-tilt').tilt({
+        maxTilt:        20,
+        easing:         "cubic-bezier(.03,.98,.52,.99)", 
+        scale:          1,    
+        speed:          500,   
+        transition:     true,   
+        reset:          true,  
+       
+    })
+    
+    $(".work__img").mouseover(function() {
+        var src = $(this).find('img').attr('src');
+        var t = $(this).find('h2').text();
+        var ht = $(this).find('.work__title');
+        $('.hover-bg__item').css('backgroundImage', 'url(' + src + ')');
+        $('.hover-bg').addClass('is-hover');
+        $(this).addClass('is-hover');
+        $(ht).addClass('is-hover');
+        $(ht).text(t);
+        $('.work__img').addClass('is-opacity');
+    });
+    
+    $(".work__img").mouseleave(function() {
+        $('.hover-bg').removeClass('is-hover'); 
+        $('.work__title').removeClass('is-hover');
+        $(this).removeClass('is-hover');
+        $('.work__img').removeClass('is-opacity');
+       
+    });
+   
     
 }
 
 
 
-$(".explore").click(function(){
-    var title1 = document.getElementById("t1");
-    var title2 = document.getElementById("t2");
-    var explore = document.getElementsByClassName('explore');
-    var tl = new TimelineMax();
-    tl.to(title1, 0.3, {top: "100px", ease: "power3.inOut"} );
-    tl.to(title2, 0.3, {delay: 0.01, top: "150px", ease: "power3.inOut"});
-    tl.to(explore, 0.3, {delay: 0.02, opacity: 0});
-    setTimeout(function(){ 
-        window.location.href = 'works.html';
- }, 1300); 
-});
 
 
 
-$('.js-tilt').tilt({
-    maxTilt:        20,
-    easing:         "cubic-bezier(.03,.98,.52,.99)", 
-    scale:          1,    
-    speed:          500,   
-    transition:     true,   
-    reset:          true,  
-   
-})
-
-$(".work__img").mouseover(function() {
-    var src = $(this).find('img').attr('src');
-    var t = $(this).find('h2').text();
-    var ht = $(this).find('.work__title');
-    $('.hover-bg__item').css('backgroundImage', 'url(' + src + ')');
-    $('.hover-bg').addClass('is-hover');
-    $(this).addClass('is-hover');
-    $(ht).addClass('is-hover');
-    $(ht).text(t);
-    $('.work__img').addClass('is-opacity');
-    $('.navbar').addClass('is-invert');
-    $('.brand').addClass('is-invert');
-    $('.scrolldown').addClass('is-invert');
-});
-
-$(".work__img").mouseleave(function() {
-    $('.hover-bg').removeClass('is-hover'); 
-    $('.work__title').removeClass('is-hover');
-    $(this).removeClass('is-hover');
-    $('.work__img').removeClass('is-opacity');
-    $('.navbar').removeClass('is-invert');
-    $('.brand').removeClass('is-invert');
-    $('.scrolldown').removeClass('is-invert');
-});
-
-
-$('.work__img').click(function(){
-    $('.work__overlay').addClass('is-visible');
-    $('.bg__dark').addClass('is-visible');
-    window.setTimeout(function(){$('.bg__white').addClass('is-visible');}, 500);
-    $('body').addClass('no-scroll');
-   
-});
-
-$('#close').click(function(){
-    $('.work__overlay').removeClass('is-visible');
-    window.setTimeout(function(){$('.bg__dark').removeClass('is-visible');}, 500);
-    $('.bg__white').removeClass('is-visible');
-    $('body').removeClass('no-scroll');
-});
 
 
 

@@ -8,7 +8,12 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<body class="works">
 
-		<!--<div class="loading"></div>-->
+		<div class="loading">
+			<span id="load__title">Works Loading</span>
+			<div id="loader">
+				<div id="loading__bar"></div>
+			</div>
+		</div>
 		<div class="nav">
 			<div class="brand"><a href="index.html"><h1 class="nav__brand"></h1></a></div>
 		</div>
@@ -20,13 +25,14 @@
 			Menu
 		</div>
 		
+		
 		<div class="work__bgTitle">
 			<h2>Works</h2>
 		</div>
 
 		<div class="work__content">
-			<div data-scroll-container="" id="js-scroll">
-				<div class="work__inner" data-scroll data-scroll-speed="1">
+			<div id="js-scroll">
+				<div class="work__inner">
 					<div class="work__img js-tilt">
 						<img src="img/full2.jpg" alt="">
 						<h2 class="w__title">Faces</h2>
@@ -61,6 +67,8 @@
 			</div>
 			
 		</div>
+
+		
 		
 		<div class="hover-bg">
 			<div class="hover-bg__item"></div>
@@ -69,12 +77,15 @@
 		<div class="scrolldown">
 			<img src="img/circles/scroll.png" alt="">
 		</div>	
-		<div class="work__overlay">
-			<div class="bg__dark"></div>
-			<div class="bg__white"></div>
-			<span id="close">Back</span>
-		</div>
 
+		
+
+			<div class="mouse-stoker">
+				<div class="pc-only cursor"></div>
+				<div class="pc-only follower"></div>
+			</div>
+
+		
 		<script src="js/imagesloaded.pkgd.min.js"></script>
 		<script src="js/jquery3.5.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
