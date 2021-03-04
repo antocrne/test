@@ -1,52 +1,53 @@
-var
-cursor = $(".cursor"),
-follower = $(".follower"),
-cWidth = 8, 
-fWidth = 50, 
-delay = 10, 
-mouseX = 0, 
-mouseY = 0,
-posX = 0, 
-posY = 0; 
+$(".toggle__menu").click(function(){
+    $('.menu__span').toggleClass('is-active');
+    $('.menu__overlay').toggleClass('is-visible');
+    $('#o1').toggleClass('is-revealed');
+    $('#o2').toggleClass('is-revealed');
+    $('#o3').toggleClass('is-revealed');
+   
 
+    /*
+     var o1 = document.getElementById("o1");
+    var o2 = document.getElementById("o2");
+    var o3 = document.getElementById("o3");
+    TweenMax.from(o1, 0.5, {top: "50px", delay: 0.5});
+    TweenMax.from(o2, 0.5, {top: "50px", delay: 0.6});
+    TweenMax.from(o3, 0.5, {top: "50px", delay: 0.7});
+    */
 
-TweenMax.to({}, .001, {
-  repeat: -1,
-  onRepeat: function() {
-    posX += (mouseX - posX) / delay;
-    posY += (mouseY - posY) / delay;
-    
-    TweenMax.set(follower, {
-        css: {
-          left: posX - (fWidth / 2),
-          top: posY - (fWidth / 2)
-        }
-    });
-    
-    TweenMax.set(cursor, {
-        css: {
-          left: mouseX - (cWidth / 2),
-          top: mouseY - (cWidth / 2)
-        }
-    });
-  }
 });
 
+  $("#email").click(function() {
 
-$(document).on("mousemove", function(e) {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
+    if (document.selection) { // IE
+        var range = document.body.createTextRange();
+        range.moveToElementText(document.getElementById("email"));
+        range.select();
+    } else if (window.getSelection) {
+        var range = document.createRange();
+        range.selectNode(document.getElementById("email"));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+    }
+    document.execCommand("copy");
 
-$("a").on({
-  "mouseenter": function() {
-    cursor.addClass("is-active");
-    follower.addClass("is-active");
-  },
-  "mouseleave": function() {
-    cursor.removeClass("is-active");
-    follower.removeClass("is-active");
-  }
+    if (window.getSelection) {
+        window.getSelection().removeAllRanges();
+    }
+    else if (document.selection) {
+        document.selection.empty();
+    }
+
+    var posEmailX = $("#email").offset().left;
+    var posEmailY = $("#email").offset().top;
+    var emailHeight = $("#email").height();
+    let emailContent = document.getElementById("email").innerHTML;
+
+    document.getElementById("email").innerHTML = "Email copied to clipboard";
+
+    setTimeout(function(){
+        document.getElementById("email").innerHTML = "contact@antoinecorniere.com";
+    }, 1200);
 });
 
 
@@ -263,6 +264,7 @@ $("a").on({
         $(ht).addClass('is-hover');
         $(ht).text(t);
         $('.work__img').addClass('is-opacity');
+        $('.scrolldown').addClass('is-filter');
     });
     
     $(".work__img").mouseleave(function() {
@@ -270,9 +272,8 @@ $("a").on({
         $('.work__title').removeClass('is-hover');
         $(this).removeClass('is-hover');
         $('.work__img').removeClass('is-opacity');
-       
-    });
-   
+        $('.scrolldown').removeClass('is-filter');
+    });  
     
 }
 
