@@ -152,6 +152,8 @@ a:focus {
 
 
 .home {
+	width: 100%;
+	height: 100vh;
 	overflow: hidden;
 }
 
@@ -348,7 +350,7 @@ a:focus {
 
 
 .explore {
-    position: fixed;
+    position: absolute;
     bottom: 30px;
     right: 50px;
 	z-index: 2;
@@ -597,9 +599,20 @@ transition: .75s cubic-bezier(.25, .1, .25, 1);
 	margin-right: 2%;
 }
 
-.info__img {
+.info__pic {
 	width: 95%;
 	margin: 5%;
+	text-align: right;
+}
+
+.info__pic a {
+	font-weight: 300;
+	font-size: 13px;
+	margin-top: 12px;
+}
+
+.info__img {
+	width: 100%;
 }
 
 .info__img img {
@@ -610,6 +623,51 @@ transition: .75s cubic-bezier(.25, .1, .25, 1);
 
 #email {
 	cursor: pointer;
+}
+
+#back__btn {
+	position: absolute;
+	top: 50%;
+	left: 20px;
+	transform: translate(0, -50%);
+}
+
+
+.video__content {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+
+.video__title {
+	font-family: var(--font1);
+	position: absolute;
+	top: 30px;
+	left: 40px;
+	font-size: 3rem;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.v__iframe {
+	width: 60%;
+	height: 550px;
+}
+
+.video__info {
+	position: absolute;
+	bottom: 5%;
+	width: 60%;
+}
+
+.video__info p {
+	font-weight: 300;
+	font-size: 15px;
+	margin-bottom: 1%;
+	text-align: right;
 }
 
 
@@ -735,6 +793,8 @@ transition: .75s cubic-bezier(.25, .1, .25, 1);
 }
 
 @media screen and (max-width: 414px) {
+
+	
 	
 	.content__title h1 {
 		font-size: 1.8rem;
