@@ -40,8 +40,8 @@ $(document).ready(function (){
         }, 1000);
         $('.menu__overlay').removeClass('menu-visible');
         $('.menu__span').removeClass('is-active');
-        $('body').addClass('stop-scrolling');
-        $('body').bind('touchmove', function(e){e.preventDefault()});
+        $('body').removeClass('stop-scrolling');
+        $('body').unbind('touchmove');
     });
 
     $("#pLink").click(function (){
