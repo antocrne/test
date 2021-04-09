@@ -30,6 +30,7 @@ $(document).ready(function(){
 $(".toggle__menu").click(function(){
     $('.menu__span').toggleClass('is-active');
     $('.menu__overlay').toggleClass('menu-visible');
+    $('body').toggleClass('stop-scrolling');
 });
 
 $(document).ready(function (){
