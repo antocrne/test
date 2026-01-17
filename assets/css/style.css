@@ -1,0 +1,305 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "owners-text", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Images de fond */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.6s ease;
+    z-index: -1;
+}
+
+.background.active {
+    opacity: 1;
+}
+
+.background.inactive {
+    opacity: 0;
+}
+
+/* Overlay sombre pour meilleure lisibilité */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 0;
+}
+
+/* Navigation */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 60px;
+    z-index: 100;
+}
+
+nav a {
+    color: #FAF9F6;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    transition: opacity 0.3s;
+}
+
+nav a:hover {
+    opacity: 0.7;
+}
+
+
+.logo img {
+    width: 45px;
+    height: auto;
+}
+
+/* Conteneur des titres */
+.content {
+    position: relative;
+    z-index: 10;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-left: 60px;
+    padding-bottom: 40px;
+}
+
+.title-item {
+    margin: 10px 0 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    letter-spacing: -2px;
+}
+
+
+.title-item h2 {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 62px;
+    font-weight: 300;
+    margin: 0;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.title-item .year-label {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 16px;
+    font-weight: 300;
+    margin: 0;
+    transition: all 0.3s ease;
+    position: relative;
+    top: 0px;
+    letter-spacing: 0px;
+}
+
+.title-item:hover h1,
+.title-item:hover h2,
+.title-item:hover .year-label {
+    color: #FAF9F6;
+}
+
+.title-item.active #top-title,
+.title-item.active h2 {
+    color: #FAF9F6;
+}
+
+.title-item.active .year-label {
+color: #FAF9F6;
+}
+
+/* Années */
+.years {
+    display: none;
+}
+
+
+
+/* Pagination mobile */
+.pagination {
+    display: none;
+    position: fixed;
+    right: 30px;
+    bottom: 5%;
+    transform: translateY(-50%);
+    z-index: 100;
+    color: #FAF9F6;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagination .current {
+    font-size: 14px;
+}
+
+.pagination .separator {
+    width: 1px;
+    height: 50px;
+    background: #FAF9F6;
+}
+
+.pagination .total {
+    opacity: 0.5;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+    /* Activer la pagination sur mobile */
+    .pagination {
+        display: flex;
+    }
+
+    /* Navigation */
+    nav {
+        padding: 30px 30px;
+    }
+
+    nav a {
+        font-size: 16px;
+    }
+
+    .logo img {
+        width: 40px;
+    }
+
+    /* Désactiver le scroll classique */
+    body {
+        overflow: hidden;
+        height: 100vh;
+    }
+
+    /* Overlay adapté */
+    .overlay {
+        background: rgba(0, 0, 0, 0.4);
+    }
+
+    /* Conteneur */
+    .content {
+        height: 100vh;
+        width: 100%;
+        padding: 0;
+        display: block;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Chaque titre devient une section full-screen absolue */
+    .title-item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 0 30px 100px 30px;
+        gap: 10px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s ease;
+    }
+
+    /* Slide active */
+    .title-item.active-slide {
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 2;
+    }
+
+    /* Background pour chaque section avec effet zoom */
+    .title-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+        transition: transform 0.5s ease;
+        transform: scale(1.02);
+    }
+
+    /* Zoom out quand la slide devient active */
+    .title-item.active-slide::before {
+        transform: scale(1);
+    }
+
+    /* Images de fond pour chaque section */
+    .title-item[data-bg="bg-norway"]::before {
+        background-image: url('../img/bg/norway.avif');
+    }
+
+    .title-item[data-bg="bg-run"]::before {
+        background-image: url('../img/bg/run.avif');
+    }
+
+    .title-item[data-bg="bg-canon"]::before {
+        background-image: url('../img/bg/block2_image.jpg');
+    }
+
+    .title-item[data-bg="bg-archives"]::before {
+        background-image: url('../img/bg/desert.avif');
+    }
+
+    /* Cacher les backgrounds fixes sur mobile */
+    .background {
+        display: none;
+    }
+
+    /* Typographie mobile */
+    .title-item h2 {
+        font-size: 36px;
+        letter-spacing: -1.5px;
+    }
+
+    .title-item .year-label {
+        font-size: 14px;
+    }
+
+    /* Désactiver hover sur mobile */
+    .title-item:hover h2,
+    .title-item:hover .year-label {
+        transform: none;
+    }
+
+    /* Titres toujours blancs sur mobile */
+    .title-item h2,
+    .title-item .year-label {
+        color: #FAF9F6;
+    }
+}
