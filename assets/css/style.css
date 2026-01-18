@@ -64,9 +64,14 @@ nav a {
     color: #FAF9F6;
     text-decoration: none;
     font-size: 18px;
-    font-weight: 300;
+    font-weight: 400;
     letter-spacing: 1px;
     transition: opacity 0.3s;
+    
+}
+
+.white-nav a { 
+    color: #000;
 }
 
 nav a:hover {
@@ -74,9 +79,15 @@ nav a:hover {
 }
 
 
+
+
 .logo img {
     width: 45px;
     height: auto;
+}
+
+.white-nav .logo img {
+    filter: invert(1);
 }
 
 /* Conteneur des titres */
@@ -102,13 +113,14 @@ nav a:hover {
 }
 
 
-.title-item h2 {
+.title-item h2 a {
     color: rgba(255, 255, 255, 0.6);
     font-size: 62px;
     font-weight: 300;
     margin: 0;
     transition: all 0.3s ease;
     font-weight: 500;
+    text-decoration: none;
 }
 
 .title-item .year-label {
@@ -123,13 +135,13 @@ nav a:hover {
 }
 
 .title-item:hover h1,
-.title-item:hover h2,
+.title-item:hover h2 a,
 .title-item:hover .year-label {
     color: #FAF9F6;
 }
 
 .title-item.active #top-title,
-.title-item.active h2 {
+.title-item.active h2 a {
     color: #FAF9F6;
 }
 
@@ -142,6 +154,256 @@ color: #FAF9F6;
     display: none;
 }
 
+
+/* Work Project */
+.work-content {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-controls, .options {
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+}
+
+.video-controls .options:first-child {
+    justify-content: flex-start;
+}
+
+.video-controls .options:last-child {
+    justify-content: flex-end;
+}
+
+.container {
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 900px;
+    width: 100%;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+}
+.pt {
+    padding-top: 56.25%;
+}
+.player {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.player iframe {
+    border-radius: inherit;
+    height: 100%;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+.container.fullscreen{
+  max-width: 100%;
+  width: 100%;
+  height: 100vh;
+  border-radius: 0px;
+}
+
+.wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    opacity: 0;
+    bottom: -15px;
+    transition: all 0.1s ease;
+}
+
+.container.show-controls .wrapper{
+  opacity: 1;
+  bottom: 0;
+  transition: all 0.2s ease;
+}
+
+.wrapper::before {
+    content: "";
+    bottom: 0;
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+    height: calc(100% + 35px);
+    background: #000;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+}
+
+
+.video-shield {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    display: none; 
+    background: transparent;
+    cursor: pointer;
+}
+
+.video-shield.active-yt {
+    display: block;
+}
+
+/* Miniature preview avec transition */
+.video-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    opacity: 1; /* ← Ajout */
+    transition: opacity 1.5s ease; /* ← Ajout */
+}
+
+/* Masquer la preview avec fondu */
+.video-preview.hidden {
+    opacity: 0; /* ← Au lieu de display: none */
+    pointer-events: none; /* ← Empêche de cliquer pendant le fondu */
+    background: #000; /* ← Garde le fond noir pendant le fondu */
+
+}
+
+/* L'image miniature */
+.video-preview img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Le bouton play custom */
+.play-button-preview {
+    position: relative;
+    z-index: 11;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.play-button-preview i {
+    font-size: 32px;
+    color: #FAF9F6;
+    margin-left: 5px; /* Ajustement visuel pour centrer le triangle */
+}
+
+/* Effet hover sur la preview */
+.video-preview:hover .play-button-preview {
+    transform: scale(1.1);
+}
+
+
+
+
+.video-controls {
+    padding: 5px 20px 10px;
+}
+
+.video-controls .options {
+    width: fit-content;
+}
+
+.video-timeline {
+    width: 100%;
+    cursor: pointer;
+}
+
+.options button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    color: #FAF9F6;
+    background: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.options button :where(i, span) {
+    width: 100%;
+    height: 100%;
+    line-height: 40px;
+}
+
+.options .video-timer {
+    color: #FAF9F6;
+    margin-left: 10px;
+}
+
+.current-time {   
+    padding: 10px;
+}
+
+
+.video-timeline .progress-area {
+    height: 3px;
+    position: relative;
+    background: #faf9f662;
+}
+
+.progress-area span {
+    position: absolute;
+    left: 50%;
+    top: -25px;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #FAF9F6;
+  
+}
+
+.progress-area .progress-bar {
+    width: 0%;
+    height: 100%;
+    position: relative;
+    background: #FAF9F6;
+}
+
+.progress-area .progress-bar::before {
+    content: "";
+    top: 50%;
+    right: 0;
+    height: 13px;
+    width: 13px;
+    background: inherit;
+    position: absolute;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.progress-area span, .progress-bar::before {
+    display: none;
+}
+
+.video-timeline:hover span, 
+.video-timeline:hover .progress-bar::before {
+    display: block;
+}
 
 
 /* Pagination mobile */
@@ -171,9 +433,7 @@ color: #FAF9F6;
     background: #FAF9F6;
 }
 
-.pagination .total {
-    opacity: 0.5;
-}
+
 
 /* RESPONSIVE MOBILE */
 @media (max-width: 768px) {
