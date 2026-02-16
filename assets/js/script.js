@@ -150,6 +150,9 @@ const videoPreview = document.querySelector(".video-preview");
 const videoContainer = document.getElementById('youtube-player');
 const videoId = videoContainer ? videoContainer.getAttribute('data-video-id') : null;
 
+// ✅ Détection mobile pour les contrôles
+const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
 function onYouTubeIframeAPIReady() {
     if (!videoId) {
         console.error("Aucun ID vidéo trouvé ! Ajoutez data-video-id sur #youtube-player");
@@ -161,15 +164,15 @@ function onYouTubeIframeAPIReady() {
         width: '100%',
         videoId: videoId,
         playerVars: {
-            'controls': 0,
-            'disablekb': 1,
+            'controls': isMobileDevice ? 1 : 0,  // ← YouTube sur mobile, custom sur desktop
+            'disablekb': isMobileDevice ? 0 : 1,
             'modestbranding': 1,
             'rel': 0,
             'showinfo': 0,
             'iv_load_policy': 3,
             'playsinline': 1,
             'autoplay': 0,
-            'fs': 1  // ← Active le fullscreen
+            'fs': 1
         },
         events: {
             'onReady': onPlayerReady,
@@ -181,23 +184,200 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
     isPlayerReady = true;
     console.log("Player prêt avec la vidéo:", videoId);
+    console.log("Mode:", isMobileDevice ? "Mobile (contrôles YouTube)" : "Desktop (contrôles custom)");
 }
 
 function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-        playPauseBtn.classList.replace("fa-play", "fa-pause");
-        if(shield) shield.classList.add("active-yt");
-        startUpdateInterval();
-        hideControls();
-    } else {
-        playPauseBtn.classList.replace("fa-pause", "fa-play");
-        if(shield) shield.classList.remove("active-yt");
-        stopUpdateInterval();
+    // Sur desktop, gérer les icônes custom
+    if (!isMobileDevice && playPauseBtn) {
+        if (event.data == YT.PlayerState.PLAYING) {
+            playPauseBtn.classList.replace("fa-play", "fa-pause");
+            if(shield) shield.classList.add("active-yt");
+            startUpdateInterval();
+            hideControls();
+        } else {
+            playPauseBtn.classList.replace("fa-pause", "fa-play");
+            if(shield) shield.classList.remove("active-yt");
+            stopUpdateInterval();
+        }
     }
 }
 
-// GESTION DU CLIC SUR LA PREVIEW
-if (videoPreview) {
+// ═══════════════════════════════════════════════════════
+// CONTRÔLES CUSTOM (DESKTOP UNIQUEMENT)
+// ═══════════════════════════════════════════════════════
+
+if (!isMobileDevice) {
+    // GESTION DU CLIC SUR LA PREVIEW
+    if (videoPreview) {
+        videoPreview.addEventListener('click', () => {
+            if (!isPlayerReady) return;
+            
+            videoPreview.classList.add('hidden');
+            
+            setTimeout(() => {
+                videoPreview.style.display = 'none';
+            }, 1500);
+            
+            player.playVideo();
+        });
+    }
+
+    // GESTION DU SHIELD
+    if(shield) {
+        shield.addEventListener("click", () => {
+            if (!isPlayerReady) return;
+            player.pauseVideo();
+        });
+
+        shield.addEventListener("mousemove", () => {
+            container.classList.add("show-controls");
+            clearTimeout(timer);
+            hideControls();   
+        });
+    }
+
+    function startUpdateInterval() {
+        updateInterval = setInterval(() => {
+            if (player && player.getCurrentTime) {
+                const currentTime = player.getCurrentTime();
+                const duration = player.getDuration();
+                const percent = (currentTime / duration) * 100;
+                progressBar.style.width = `${percent}%`;
+                currentVidTime.innerText = formatTime(currentTime);
+            }
+        }, 100);
+    }
+
+    function stopUpdateInterval() { 
+        clearInterval(updateInterval); 
+    }
+
+    const formatTime = time => {
+        let seconds = Math.floor(time % 60);
+        let minutes = Math.floor(time / 60) % 60;
+        let hours = Math.floor(time / 3600);
+        seconds = seconds < 10 ? `0${seconds}` : seconds;
+        minutes = minutes < 10 ? `0${minutes}` : minutes;
+        if(hours == 0) return `${minutes}:${seconds}`;
+        return `${hours}:${minutes}:${seconds}`;
+    }
+
+    const hideControls = () => {
+        if (!player || player.getPlayerState() !== YT.PlayerState.PLAYING) return;
+        timer = setTimeout(() => {
+            container.classList.remove("show-controls");
+        }, 3000);
+    }
+
+    container.addEventListener("mousemove", () => {
+        container.classList.add("show-controls");
+        clearTimeout(timer);
+        hideControls();   
+    });
+
+    // TIMELINE & DRAG
+    if (videoTimeline) {
+        videoTimeline.addEventListener("click", e => {
+            if (!player || !player.getDuration) return;
+            let timelineWidth = videoTimeline.clientWidth;
+            let newTime = (e.offsetX / timelineWidth) * player.getDuration();
+            player.seekTo(newTime, true);
+        });
+
+        const draggableProgressBar = e => {
+            let timelineWidth = videoTimeline.clientWidth;
+            let newTime = (e.offsetX / timelineWidth) * player.getDuration();
+            player.seekTo(newTime, true);
+        }
+
+        videoTimeline.addEventListener("mousedown", () => {
+            videoTimeline.addEventListener("mousemove", draggableProgressBar);
+        });
+        document.addEventListener("mouseup", () => {
+            videoTimeline.removeEventListener("mousemove", draggableProgressBar);
+        });
+    }
+
+    // BOUTONS CONTRÔLES
+    if (playPauseBtn) {
+        document.querySelector('.play-pause').addEventListener("click", () => {
+            if (!isPlayerReady) return;
+            
+            if (videoPreview && !videoPreview.classList.contains('hidden')) {
+                videoPreview.classList.add('hidden');
+            }
+            
+            player.getPlayerState() === YT.PlayerState.PLAYING ? player.pauseVideo() : player.playVideo();
+        });
+    }
+
+    if (volumeBtn) {
+        document.querySelector('.volume').addEventListener("click", () => {
+            if (!isPlayerReady) return;
+            if (player.isMuted()) {
+                player.unMute();
+                volumeBtn.classList.replace("fa-volume-xmark", "fa-volume-high");
+            } else {
+                player.mute();
+                volumeBtn.classList.replace("fa-volume-high", "fa-volume-xmark");
+            }
+        });
+    }
+
+    // FULLSCREEN (DESKTOP)
+    if (fullScreenBtn) {
+        document.querySelector('.fullscreen').addEventListener("click", () => {
+            if (!isPlayerReady) return;
+            
+            container.classList.toggle("fullscreen");
+            if(document.fullscreenElement) {
+                fullScreenBtn.classList.replace("fa-down-left-and-up-right-to-center", "fa-up-right-and-down-left-from-center");
+                document.exitFullscreen();
+            } else {
+                fullScreenBtn.classList.replace("fa-up-right-and-down-left-from-center", "fa-down-left-and-up-right-to-center");
+                container.requestFullscreen();
+            }
+        });
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) {
+            container.classList.remove('fullscreen');
+            if (fullScreenBtn) {
+                fullScreenBtn.classList.replace("fa-down-left-and-up-right-to-center", "fa-up-right-and-down-left-from-center");
+            }
+        }
+    });
+
+    // CLAVIER (DESKTOP)
+    document.addEventListener('keydown', (e) => {
+        if (!isPlayerReady) return;
+        if (e.keyCode === 32) {
+            e.preventDefault();
+            
+            if (videoPreview && !videoPreview.classList.contains('hidden')) {
+                videoPreview.classList.add('hidden');
+            }
+            
+            player.getPlayerState() === YT.PlayerState.PLAYING ? player.pauseVideo() : player.playVideo();
+        }
+        if (e.keyCode === 37) {
+            e.preventDefault();
+            player.seekTo(Math.max(0, player.getCurrentTime() - 5), true);
+        }
+        if (e.keyCode === 39) {
+            e.preventDefault();
+            player.seekTo(Math.min(player.getDuration(), player.getCurrentTime() + 5), true);
+        }
+    });
+}
+
+// ═══════════════════════════════════════════════════════
+// MOBILE : Preview uniquement
+// ═══════════════════════════════════════════════════════
+
+if (isMobileDevice && videoPreview) {
     videoPreview.addEventListener('click', () => {
         if (!isPlayerReady) return;
         
@@ -210,151 +390,3 @@ if (videoPreview) {
         player.playVideo();
     });
 }
-
-// GESTION DU SHIELD
-if(shield) {
-    shield.addEventListener("click", () => {
-        if (!isPlayerReady) return;
-        player.pauseVideo();
-    });
-
-    shield.addEventListener("mousemove", () => {
-        container.classList.add("show-controls");
-        clearTimeout(timer);
-        hideControls();   
-    });
-}
-
-function startUpdateInterval() {
-    updateInterval = setInterval(() => {
-        if (player && player.getCurrentTime) {
-            const currentTime = player.getCurrentTime();
-            const duration = player.getDuration();
-            const percent = (currentTime / duration) * 100;
-            progressBar.style.width = `${percent}%`;
-            currentVidTime.innerText = formatTime(currentTime);
-        }
-    }, 100);
-}
-
-function stopUpdateInterval() { 
-    clearInterval(updateInterval); 
-}
-
-const formatTime = time => {
-    let seconds = Math.floor(time % 60);
-    let minutes = Math.floor(time / 60) % 60;
-    let hours = Math.floor(time / 3600);
-    seconds = seconds < 10 ? `0${seconds}` : seconds;
-    minutes = minutes < 10 ? `0${minutes}` : minutes;
-    if(hours == 0) return `${minutes}:${seconds}`;
-    return `${hours}:${minutes}:${seconds}`;
-}
-
-const hideControls = () => {
-    if (!player || player.getPlayerState() !== YT.PlayerState.PLAYING) return;
-    timer = setTimeout(() => {
-        container.classList.remove("show-controls");
-    }, 3000);
-}
-
-container.addEventListener("mousemove", () => {
-    container.classList.add("show-controls");
-    clearTimeout(timer);
-    hideControls();   
-});
-
-// TIMELINE & DRAG
-videoTimeline.addEventListener("click", e => {
-    if (!player || !player.getDuration) return;
-    let timelineWidth = videoTimeline.clientWidth;
-    let newTime = (e.offsetX / timelineWidth) * player.getDuration();
-    player.seekTo(newTime, true);
-});
-
-const draggableProgressBar = e => {
-    let timelineWidth = videoTimeline.clientWidth;
-    let newTime = (e.offsetX / timelineWidth) * player.getDuration();
-    player.seekTo(newTime, true);
-}
-
-videoTimeline.addEventListener("mousedown", () => {
-    videoTimeline.addEventListener("mousemove", draggableProgressBar);
-});
-document.addEventListener("mouseup", () => {
-    videoTimeline.removeEventListener("mousemove", draggableProgressBar);
-});
-
-// BOUTONS CONTRÔLES
-playPauseBtn.addEventListener("click", () => {
-    if (!isPlayerReady) return;
-    
-    if (videoPreview && !videoPreview.classList.contains('hidden')) {
-        videoPreview.classList.add('hidden');
-    }
-    
-    player.getPlayerState() === YT.PlayerState.PLAYING ? player.pauseVideo() : player.playVideo();
-});
-
-volumeBtn.addEventListener("click", () => {
-    if (!isPlayerReady) return;
-    if (player.isMuted()) {
-        player.unMute();
-        volumeBtn.classList.replace("fa-volume-xmark", "fa-volume-high");
-    } else {
-        player.mute();
-        volumeBtn.classList.replace("fa-volume-high", "fa-volume-xmark");
-    }
-});
-
-// FULLSCREEN
-fullScreenBtn.addEventListener("click", () => {
-    if (!isPlayerReady) return;
-    
-    const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    
-    if (isMobileDevice) {
-        // iOS - Limitation : Le fullscreen custom n'est pas supporté
-        // L'utilisateur doit utiliser les contrôles natifs de la vidéo
-        alert("Sur iOS, utilisez le bouton fullscreen qui apparaît sur la vidéo lors de la lecture");
-    } else {
-        // Desktop - Fonctionne normalement
-        container.classList.toggle("fullscreen");
-        if(document.fullscreenElement) {
-            fullScreenBtn.classList.replace("fa-down-left-and-up-right-to-center", "fa-up-right-and-down-left-from-center");
-            document.exitFullscreen();
-        } else {
-            fullScreenBtn.classList.replace("fa-up-right-and-down-left-from-center", "fa-down-left-and-up-right-to-center");
-            container.requestFullscreen();
-        }
-    }
-});
-
-document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement) {
-        container.classList.remove('fullscreen');
-        fullScreenBtn.classList.replace("fa-down-left-and-up-right-to-center", "fa-up-right-and-down-left-from-center");
-    }
-});
-
-// CLAVIER
-document.addEventListener('keydown', (e) => {
-    if (!isPlayerReady) return;
-    if (e.keyCode === 32) {
-        e.preventDefault();
-        
-        if (videoPreview && !videoPreview.classList.contains('hidden')) {
-            videoPreview.classList.add('hidden');
-        }
-        
-        player.getPlayerState() === YT.PlayerState.PLAYING ? player.pauseVideo() : player.playVideo();
-    }
-    if (e.keyCode === 37) {
-        e.preventDefault();
-        player.seekTo(Math.max(0, player.getCurrentTime() - 5), true);
-    }
-    if (e.keyCode === 39) {
-        e.preventDefault();
-        player.seekTo(Math.min(player.getDuration(), player.getCurrentTime() + 5), true);
-    }
-});
