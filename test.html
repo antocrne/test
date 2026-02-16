@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Player Fullscreen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            background: #000;
+        }
+
+        .pt {
+            padding-top: 56.25%;
+            position: relative;
+        }
+
+        .player {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .player iframe {
+            width: 100%;
+            height: 100%;
+        }
+
+        .wrapper {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 20px;
+        }
+
+        .video-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .video-controls button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .video-controls button:hover {
+            color: #ccc;
+        }
+
+        .info {
+            color: white;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #2a2a2a;
+            border-radius: 8px;
+        }
+
+        .info h2 {
+            margin-bottom: 10px;
+        }
+
+        .info p {
+            margin: 5px 0;
+            color: #ccc;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            background: #333;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .status div {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div style="max-width: 1000px; width: 100%;">
+        <div class="container">
+            <div class="pt">
+                <div class="player">
+                    <div id="youtube-player" data-video-id="7r4Ha_mX3cE"></div>
+                </div>
+            </div>
+            <div class="wrapper">
+                <div class="video-controls">
+                    <button type="button" class="play-pause">
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+                    <button type="button" class="volume">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                    <button type="button" class="fullscreen">
+                        <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="info">
+            <h2>🧪 Test Player Fullscreen iOS</h2>
+            <p><strong>Appareil détecté :</strong> <span id="device-type"></span></p>
+            <p><strong>User Agent :</strong> <span id="user-agent"></span></p>
+            
+            <div class="status">
+                <div><strong>Status :</strong> <span id="status">En attente...</span></div>
+                <div><strong>Player prêt :</strong> <span id="player-ready">Non</span></div>
+                <div><strong>Fullscreen disponible :</strong> <span id="fs-available">Non</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Afficher les infos de l'appareil
+        const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        document.getElementById('device-type').textContent = isMobileDevice ? 'Mobile (iOS/Android)' : 'Desktop';
+        document.getElementById('user-agent').textContent = navigator.userAgent;
+
+        // API YouTube
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        let player;
+        let isPlayerReady = false;
+
+        const playPauseBtn = document.querySelector(".play-pause i");
+        const volumeBtn = document.querySelector(".volume i");
+        const fullScreenBtn = document.querySelector(".fullscreen i");
+        const videoContainer = document.getElementById('youtube-player');
+        const videoId = videoContainer.getAttribute('data-video-id');
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '100%',
+                width: '100%',
+                videoId: videoId,
+                playerVars: {
+                    'controls': 0,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'playsinline': 1,
+                    'fs': 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            isPlayerReady = true;
+            document.getElementById('player-ready').textContent = 'Oui ✅';
+            document.getElementById('status').textContent = 'Player chargé avec succès';
+            
+            // Vérifier disponibilité fullscreen
+            const iframe = player.getIframe();
+            if (iframe.requestFullscreen || iframe.webkitRequestFullscreen || iframe.webkitEnterFullscreen) {
+                document.getElementById('fs-available').textContent = 'Oui ✅';
+            }
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING) {
+                playPauseBtn.classList.replace("fa-play", "fa-pause");
+                document.getElementById('status').textContent = 'Vidéo en lecture';
+            } else {
+                playPauseBtn.classList.replace("fa-pause", "fa-play");
+                document.getElementById('status').textContent = 'Vidéo en pause';
+            }
+        }
+
+        // PLAY/PAUSE
+        document.querySelector('.play-pause').addEventListener("click", () => {
+            if (!isPlayerReady) return;
+            player.getPlayerState() === YT.PlayerState.PLAYING ? player.pauseVideo() : player.playVideo();
+        });
+
+        // VOLUME
+        document.querySelector('.volume').addEventListener("click", () => {
+            if (!isPlayerReady) return;
+            if (player.isMuted()) {
+                player.unMute();
+                volumeBtn.classList.replace("fa-volume-xmark", "fa-volume-high");
+            } else {
+                player.mute();
+                volumeBtn.classList.replace("fa-volume-high", "fa-volume-xmark");
+            }
+        });
+
+        // FULLSCREEN - TEST TOUTES LES MÉTHODES
+        document.querySelector('.fullscreen').addEventListener("click", () => {
+            if (!isPlayerReady) return;
+            
+            document.getElementById('status').textContent = 'Tentative fullscreen...';
+            
+            const iframe = player.getIframe();
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            
+            console.log('=== TEST FULLSCREEN ===');
+            console.log('Mobile:', isMobile);
+            console.log('Iframe:', iframe);
+            
+            if (isMobile) {
+                // TEST 1 : webkitEnterFullscreen
+                if (iframe.webkitEnterFullscreen) {
+                    console.log('Méthode: webkitEnterFullscreen');
+                    try {
+                        iframe.webkitEnterFullscreen();
+                        document.getElementById('status').textContent = '✅ webkitEnterFullscreen lancé';
+                    } catch(e) {
+                        console.error('Erreur:', e);
+                        document.getElementById('status').textContent = '❌ Erreur: ' + e.message;
+                    }
+                }
+                // TEST 2 : webkitRequestFullscreen
+                else if (iframe.webkitRequestFullscreen) {
+                    console.log('Méthode: webkitRequestFullscreen');
+                    iframe.webkitRequestFullscreen();
+                    document.getElementById('status').textContent = '✅ webkitRequestFullscreen lancé';
+                }
+                // TEST 3 : requestFullscreen
+                else if (iframe.requestFullscreen) {
+                    console.log('Méthode: requestFullscreen');
+                    iframe.requestFullscreen();
+                    document.getElementById('status').textContent = '✅ requestFullscreen lancé';
+                }
+                else {
+                    document.getElementById('status').textContent = '❌ Aucune méthode disponible';
+                }
+            } else {
+                // Desktop
+                if (iframe.requestFullscreen) {
+                    iframe.requestFullscreen();
+                    document.getElementById('status').textContent = '✅ Desktop fullscreen';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
