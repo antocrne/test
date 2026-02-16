@@ -161,13 +161,13 @@ function onYouTubeIframeAPIReady() {
         width: '100%',
         videoId: videoId,
         playerVars: {
-            'controls': 0,
+            'controls': 1,
             'disablekb': 1,
             'modestbranding': 1,
             'rel': 0,
             'showinfo': 0,
             'iv_load_policy': 3,
-            'playsinline': 1,
+            'playsinline': 0,
             'autoplay': 0
         },
         events: {
