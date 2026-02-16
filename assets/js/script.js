@@ -161,7 +161,7 @@ function onYouTubeIframeAPIReady() {
         width: '100%',
         videoId: videoId,
         playerVars: {
-            'controls': 1,
+            'controls': 0,
             'disablekb': 1,
             'modestbranding': 1,
             'rel': 0,
