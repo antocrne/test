@@ -66,10 +66,12 @@ nav {
 nav a {
     color: #FAF9F6;
     text-decoration: none;
-    font-size: 18px;
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: 500;
     letter-spacing: 1px;
     transition: opacity 0.3s;
+    text-transform: uppercase;
+
     
 }
 
@@ -504,6 +506,82 @@ color: #FAF9F6;
     padding-left: 7.5px;
 }
 
+
+
+
+
+.archive-wrapper {
+    padding: 20px 60px;
+    max-width: 3000px;
+    /*--- max-width: 1600px; --*/
+    margin: 5% auto;
+}
+
+.archive-header h1 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 40px;
+    font-weight: 500;
+}
+
+/* --- Gallery Grid (Masonry Effect) --- */
+.gallery-grid {
+    /* On définit 4 colonnes */
+    column-count: 4;
+    /* L'espace horizontal entre les colonnes */
+    column-gap: 20px;
+}
+
+.gallery-item {
+    /* Empêche l'image de se scinder entre deux colonnes */
+    break-inside: avoid;
+    margin-bottom: 20px; /* L'espace vertical */
+    width: 100%;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* Optionnel : adoucir le rendu */
+    transition: opacity 0.4s ease;
+}
+
+
+/* --- Responsiveness --- */
+
+/* Tablettes larges / Petits laptops */
+@media (max-width: 1100px) {
+    .gallery-grid {
+        column-count: 3;
+    }
+}
+
+/* Tablettes portrait */
+@media (max-width: 800px) {
+    .gallery-grid {
+        column-count: 1;
+        column-gap: 15px;
+    }
+    .gallery-item {
+        margin-bottom: 15px;
+    }
+    .archive-wrapper {
+        padding: 20px 30px;
+    }
+}
+
+/* Mobiles */
+@media (max-width: 500px) {
+    .gallery-grid {
+        column-count: 1;
+    }
+
+    .archive-wrapper {
+        padding: 20px 30px;
+    }
+}
 
 
 @media (max-width: 1024px) {
