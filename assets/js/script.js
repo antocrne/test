@@ -167,7 +167,7 @@ function onYouTubeIframeAPIReady() {
             'rel': 0,
             'showinfo': 0,
             'iv_load_policy': 3,
-            'playsinline': 0,
+            'playsinline': 1,  // ← Remis à 1
             'autoplay': 0
         },
         events: {
@@ -306,31 +306,27 @@ volumeBtn.addEventListener("click", () => {
     }
 });
 
-// FULLSCREEN - COMPATIBLE iOS
+// ✅ FULLSCREEN - Nouvelle approche iOS
 fullScreenBtn.addEventListener("click", () => {
     if (!isPlayerReady) return;
     
     const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     
     if (isMobileDevice) {
-        // Sur mobile, utiliser l'iframe via l'API YouTube
+        // Sur iOS, utiliser l'iframe directement
         const iframe = player.getIframe();
         
-        // Tenter toutes les méthodes iOS
-        try {
-            if (iframe.webkitEnterFullscreen) {
-                iframe.webkitEnterFullscreen();
-            } else if (iframe.webkitRequestFullscreen) {
-                iframe.webkitRequestFullscreen();
-            } else if (iframe.requestFullscreen) {
-                iframe.requestFullscreen();
-            }
-        } catch(e) {
-            console.log("Fullscreen bloqué:", e);
+        // Force le fullscreen iOS
+        if (iframe.webkitEnterFullscreen) {
+            iframe.webkitEnterFullscreen();
+        } else if (iframe.webkitRequestFullscreen) {
+            iframe.webkitRequestFullscreen();
+        } else if (iframe.requestFullscreen) {
+            iframe.requestFullscreen();
         }
         
     } else {
-        // Desktop - code normal
+        // Desktop
         container.classList.toggle("fullscreen");
         if(document.fullscreenElement) {
             fullScreenBtn.classList.replace("fa-down-left-and-up-right-to-center", "fa-up-right-and-down-left-from-center");
