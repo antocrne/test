@@ -2,10 +2,13 @@
 const titleItems = document.querySelectorAll('.title-item');
 const backgrounds = document.querySelectorAll('.background');
 
+
 // Si pas de .title-item, on est sur une autre page → on arrête le script homepage
 if (titleItems.length === 0) {
     console.log("Page projet détectée, script homepage ignoré");
 } else {
+    
+    
     // Détection mobile
     const isMobile = window.innerWidth <= 768;
 
@@ -13,11 +16,12 @@ if (titleItems.length === 0) {
         // === MOBILE: Slider avec swipe et pagination ===
         
         let currentSlide = 0;
-        const totalSlides = titleItems.length;
+        const totalSlides = titleItems.length; // Compte auto le nombre de slides
         let touchStartY = 0;
         let touchEndY = 0;
         let isAnimating = false;
 
+        
         const pagination = document.createElement('div');
         pagination.className = 'pagination';
         pagination.innerHTML = `
@@ -27,19 +31,25 @@ if (titleItems.length === 0) {
         `;
         document.body.appendChild(pagination);
 
+        // Fonction pour changer de slide
         function goToSlide(index) {
             if (isAnimating || index < 0 || index >= totalSlides) return;
             
             isAnimating = true;
             currentSlide = index;
 
+            
             titleItems.forEach(item => {
                 item.classList.remove('active-slide');
             });
 
+            
             titleItems[currentSlide].classList.add('active-slide');
+
+           
             pagination.querySelector('.current').textContent = currentSlide + 1;
 
+           
             setTimeout(() => {
                 isAnimating = false;
             }, 600);
@@ -47,6 +57,7 @@ if (titleItems.length === 0) {
 
         goToSlide(0);
 
+        // Gestion du touch/swipe
         document.addEventListener('touchstart', (e) => {
             touchStartY = e.touches[0].clientY;
         });
@@ -57,18 +68,21 @@ if (titleItems.length === 0) {
         });
 
         function handleSwipe() {
-            const swipeThreshold = 50;
+            const swipeThreshold = 50; // 
             const diff = touchStartY - touchEndY;
 
             if (Math.abs(diff) > swipeThreshold) {
                 if (diff > 0) {
+                    
                     goToSlide(currentSlide + 1);
                 } else {
+                    
                     goToSlide(currentSlide - 1);
                 }
             }
         }
 
+        // Gestion du scroll avec la molette (pour desktop en mode mobile)
         let scrollTimeout;
         document.addEventListener('wheel', (e) => {
             e.preventDefault();
@@ -86,6 +100,7 @@ if (titleItems.length === 0) {
     } else {
         // === DESKTOP: Comportement existant ===
         
+        // Fonction pour changer l'image de fond
         function changeBackground(bgId) {
             backgrounds.forEach(bg => {
                 if (bg.id === bgId) {
@@ -97,6 +112,7 @@ if (titleItems.length === 0) {
                 }
             });
 
+            // Mettre à jour la classe active sur les titres
             titleItems.forEach(item => {
                 if (item.getAttribute('data-bg') === bgId) {
                     item.classList.add('active');
@@ -106,6 +122,7 @@ if (titleItems.length === 0) {
             });
         }
 
+        // Ajouter les événements de survol
         titleItems.forEach(item => {
             item.addEventListener('mouseenter', function() {
                 const bgId = this.getAttribute('data-bg');
@@ -114,6 +131,7 @@ if (titleItems.length === 0) {
         });
     }
 
+    // Réinitialiser au resize
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
@@ -123,9 +141,10 @@ if (titleItems.length === 0) {
     });
 }
 
-// ═══════════════════════════════════════════════════════
+
+
+
 // PLAYER YOUTUBE
-// ═══════════════════════════════════════════════════════
 
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
@@ -145,8 +164,11 @@ const volumeBtn = document.querySelector(".volume i");
 const currentVidTime = document.querySelector(".current-time");
 const fullScreenBtn = document.querySelector(".fullscreen i");
 const shield = document.querySelector(".video-shield");
+
+// Récupération de la preview
 const videoPreview = document.querySelector(".video-preview");
 
+// Récupération dynamique de l'ID vidéo
 const videoContainer = document.getElementById('youtube-player');
 const videoId = videoContainer ? videoContainer.getAttribute('data-video-id') : null;
 
@@ -200,12 +222,15 @@ if (videoPreview) {
     videoPreview.addEventListener('click', () => {
         if (!isPlayerReady) return;
         
+        // Cache la preview avec fondu
         videoPreview.classList.add('hidden');
         
+        // Après 1 seconde (durée du fondu), retire complètement du DOM
         setTimeout(() => {
             videoPreview.style.display = 'none';
         }, 1500);
         
+        // Lance la vidéo
         player.playVideo();
     });
 }
@@ -224,6 +249,7 @@ if(shield) {
     });
 }
 
+// MISE À JOUR BARRE DE PROGRESSION
 function startUpdateInterval() {
     updateInterval = setInterval(() => {
         if (player && player.getCurrentTime) {
@@ -236,9 +262,7 @@ function startUpdateInterval() {
     }, 100);
 }
 
-function stopUpdateInterval() { 
-    clearInterval(updateInterval); 
-}
+function stopUpdateInterval() { clearInterval(updateInterval); }
 
 const formatTime = time => {
     let seconds = Math.floor(time % 60);
@@ -288,6 +312,7 @@ document.addEventListener("mouseup", () => {
 playPauseBtn.addEventListener("click", () => {
     if (!isPlayerReady) return;
     
+    // Si c'est le premier play et que la preview est visible
     if (videoPreview && !videoPreview.classList.contains('hidden')) {
         videoPreview.classList.add('hidden');
     }
@@ -306,57 +331,44 @@ volumeBtn.addEventListener("click", () => {
     }
 });
 
-// ✅ FULLSCREEN - COMPATIBLE iOS
+// FULLSCREEN - Compatible Desktop + iOS
 fullScreenBtn.addEventListener("click", () => {
-    // Récupérer l'iframe YouTube généré par l'API
-    const youtubeIframe = document.querySelector('#youtube-player iframe');
+    // Détecter si on est sur mobile
+    const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     
-    if (!youtubeIframe) return;
-    
-    // Vérifier si on est déjà en fullscreen
-    const isFullscreen = document.fullscreenElement || 
-                         document.webkitFullscreenElement || 
-                         document.mozFullScreenElement;
-    
-    if (isFullscreen) {
-        // Sortir du fullscreen
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        }
-        fullScreenBtn.classList.replace("fa-down-left-and-up-right-to-center", "fa-up-right-and-down-left-from-center");
-    } else {
-        // Entrer en fullscreen sur l'iframe (compatible iOS)
+    if (isMobileDevice) {
+        // === MOBILE : Fullscreen sur iframe ===
+        const youtubeIframe = document.querySelector('#youtube-player iframe');
+        if (!youtubeIframe) return;
+        
         if (youtubeIframe.requestFullscreen) {
             youtubeIframe.requestFullscreen();
         } else if (youtubeIframe.webkitRequestFullscreen) {
             youtubeIframe.webkitRequestFullscreen();
-        } else if (youtubeIframe.mozRequestFullScreen) {
-            youtubeIframe.mozRequestFullScreen();
         } else if (youtubeIframe.webkitEnterFullscreen) {
             youtubeIframe.webkitEnterFullscreen();
         }
         fullScreenBtn.classList.replace("fa-up-right-and-down-left-from-center", "fa-down-left-and-up-right-to-center");
+        
+    } else {
+        // === DESKTOP : Fullscreen sur container ===
+        container.classList.toggle("fullscreen");
+        if(document.fullscreenElement) {
+            fullScreenBtn.classList.replace("fa-down-left-and-up-right-to-center", "fa-up-right-and-down-left-from-center");
+            document.exitFullscreen();
+        } else {
+            fullScreenBtn.classList.replace("fa-up-right-and-down-left-from-center", "fa-down-left-and-up-right-to-center");
+            container.requestFullscreen();
+        }
     }
 });
 
-// Détection sortie fullscreen (tous navigateurs)
-document.addEventListener('fullscreenchange', updateFullscreenButton);
-document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
-document.addEventListener('mozfullscreenchange', updateFullscreenButton);
-
-function updateFullscreenButton() {
-    const isFullscreen = document.fullscreenElement || 
-                         document.webkitFullscreenElement || 
-                         document.mozFullScreenElement;
-    
-    if (!isFullscreen) {
+document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) {
+        container.classList.remove('fullscreen');
         fullScreenBtn.classList.replace("fa-down-left-and-up-right-to-center", "fa-up-right-and-down-left-from-center");
     }
-}
+});
 
 // CLAVIER
 document.addEventListener('keydown', (e) => {
@@ -364,6 +376,7 @@ document.addEventListener('keydown', (e) => {
     if (e.keyCode === 32) {
         e.preventDefault();
         
+        // Si c'est le premier play et que la preview est visible
         if (videoPreview && !videoPreview.classList.contains('hidden')) {
             videoPreview.classList.add('hidden');
         }
