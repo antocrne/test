@@ -168,7 +168,8 @@ function onYouTubeIframeAPIReady() {
             'showinfo': 0,
             'iv_load_policy': 3,
             'playsinline': 1,
-            'autoplay': 0
+            'autoplay': 0,
+            'fs': 1  // ← Active le fullscreen
         },
         events: {
             'onReady': onPlayerReady,
@@ -306,27 +307,18 @@ volumeBtn.addEventListener("click", () => {
     }
 });
 
-// FULLSCREEN - LA VRAIE SOLUTION iOS
+// FULLSCREEN
 fullScreenBtn.addEventListener("click", () => {
     if (!isPlayerReady) return;
     
     const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     
     if (isMobileDevice) {
-        // Sur iOS, cibler l'élément VIDEO dans l'iframe
-        try {
-            const iframe = player.getIframe();
-            const video = iframe.contentWindow.document.querySelector('video');
-            
-            if (video && video.webkitEnterFullscreen) {
-                video.webkitEnterFullscreen();
-            }
-        } catch(e) {
-            console.log("Erreur fullscreen iOS:", e);
-        }
-        
+        // iOS - Limitation : Le fullscreen custom n'est pas supporté
+        // L'utilisateur doit utiliser les contrôles natifs de la vidéo
+        alert("Sur iOS, utilisez le bouton fullscreen qui apparaît sur la vidéo lors de la lecture");
     } else {
-        // Desktop
+        // Desktop - Fonctionne normalement
         container.classList.toggle("fullscreen");
         if(document.fullscreenElement) {
             fullScreenBtn.classList.replace("fa-down-left-and-up-right-to-center", "fa-up-right-and-down-left-from-center");
