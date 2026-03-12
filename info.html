@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antoine Cornière</title>
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="https://use.typekit.net/xdp4rue.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />    
+</head>
+<body>
+ 
+ <!-- Navigation -->
+ <nav class="white-nav">
+        <a href="../index.html">Work</a>
+         <!-- Logo -->
+        <div class="logo">
+            <a href="../index.html"><img src="../assets/img/logo_V2.png" alt=""></a>
+        </div>
+        <a href="info.html">Info</a>
+</nav>
+
+<div class="info-container">
+    <div class="info-txt">
+        <h2>Info</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, distinctio reiciendis. Quidem molestiae sapiente sint nostrum. Aut reprehenderit voluptas, voluptatem eum beatae sit ad vitae, cumque explicabo qui vel omnis? Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid corrupti vitae, perspiciatis ipsam, optio ex tempora ea quod possimus itaque voluptate quo libero minus doloribus! Aperiam quasi esse laboriosam eveniet.</p>
+        <br>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, distinctio reiciendis. Quidem molestiae sapiente sint nostrum. Aut reprehenderit voluptas, voluptatem eum beatae sit ad vitae, cumque explicabo qui vel omnis?</p>
+        <div class="social-info">
+            <a id="email" href="mailto:hello@antoinecorniere.com"></a>
+            <div class="socials">
+                        <a href="https://www.instagram.com/capitaine.anto" target="_blank">Instagram</a>
+                        <a href="https://www.youtube.com/@Capitaine-Anto" target="_blank">YouTube</a>
+            </div> 
+        </div>
+    </div>
+    <div class="info-picture">
+        <img src="./assets/img/info.jpg" alt="antoine cornière info picture">
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../assets/js/script.js"></script>
+<script>
+
+
+// ═══════════════════════════════════════════════════════
+// EMAIL COPY TO CLIPBOARD
+// ═══════════════════════════════════════════════════════
+
+
+
+$(document).ready(function() {
+
+    // Add class to mailto link
+    // Needed to separate the disabling of the default action AND copy email to clipboard
+    $('a[href^=mailto]').addClass('mailto-link');
+
+    var mailto = $('.mailto-link');
+    var messageCopy = 'hello@antoinecorniere.com';
+    var messageSuccess = 'Email address copied to clipboard';
+
+    mailto.append('<span class="mailto-message"></span>');
+    $('.mailto-message').append(messageCopy);
+
+    // Disable opening your email client. yuk.
+    $('a[href^=mailto]').click(function() {
+        return false; 
+    })
+
+    // On click, get href and remove 'mailto:' from value
+    // Store email address in a variable.
+    mailto.click(function() {
+        var href = $(this).attr('href');
+        var email = href.replace('mailto:', '');
+        copyToClipboard(email);
+        $('.mailto-message').empty().append(messageSuccess);
+        setTimeout(function() {
+            $('.mailto-message').empty().append(messageCopy);}, 1500);
+    });
+
+});
+
+
+// Copies the email variable to clipboard
+function copyToClipboard(text) {
+    var dummy = document.createElement("input");
+    document.body.appendChild(dummy);
+    dummy.setAttribute('value', text);
+    dummy.select();
+    document.execCommand('copy');
+    document.body.removeChild(dummy);
+}
+
+
+</script>
+</body>
+</html> 

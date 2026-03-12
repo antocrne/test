@@ -27,8 +27,11 @@ body {
     background-size: cover;
     background-position: center;
     transition: opacity 0.6s ease;
-    z-index: -1;
+    z-index: 1;
+    pointer-events: all;
+    cursor: pointer;
 }
+
 
 .background.active {
     opacity: 1;
@@ -38,8 +41,9 @@ body {
     opacity: 0;
 }
 
-/* Overlay sombre pour meilleure lisibilité */
+
 .overlay {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -48,6 +52,7 @@ body {
     background: #000;
     opacity: 0.1;
     z-index: 0;
+    pointer-events: none;
 }
 
 /* Navigation */
@@ -102,9 +107,9 @@ nav a:hover {
 
 /* Conteneur des titres */
 .content {
-    position: relative;
+    position: absolute;
+    bottom: 0;
     z-index: 10;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -549,6 +554,66 @@ color: #FAF9F6;
 }
 
 
+/*
+--------------------------
+INFO CSS
+--------------------------
+*/
+
+.info-container {
+    margin: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.info-txt {
+    width: 55%;
+}
+
+.info-picture {
+    width: 45%;
+}
+
+.info-picture img {
+    width: 100%;
+    height: 70vh;
+    object-fit: cover;
+}
+
+.info-txt h2 {
+    font-size: 14rem;
+    margin-top: 0;
+}
+
+.info-txt p {
+    width: 90%;
+}
+
+.social-info {
+    width: 90%;
+    margin-top: 4%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.social-info a {
+    color: #000;
+    text-decoration: none;
+}
+
+.socials a {
+    margin-left: 10px;
+}
+
+.socials a:hover {
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+#email:hover {
+    opacity: 0.7;
+    transition: 0.3s;
+}
 /* --- Responsiveness --- */
 
 /* Tablettes larges / Petits laptops */
@@ -691,10 +756,12 @@ color: #FAF9F6;
         background-image: url('../img/bg/desert.avif');
     }
 
-    /* Cacher les backgrounds fixes sur mobile */
+    /* Cacher les backgrounds fixes sur mobile
     .background {
         display: none;
     }
+    */
+    
 
     /* Typographie mobile */
     .title-item h2 {
@@ -770,4 +837,45 @@ color: #FAF9F6;
     .wrapper {
         display: none;
     }
+
+    .info-container {
+        flex-direction: column;
+        margin: 30px;
+        padding-bottom: 30px;
+    }
+
+    .info-txt {
+        width: 100%;
+    }
+
+    .info-txt p {
+        width: 100%;
+    }
+
+    .social-info {
+        flex-wrap: wrap;
+    }
+
+    .socials {
+        margin-top: 10px;
+    }
+
+    .socials a {
+        margin-left: 0;
+        margin-right: 10px;
+    }
+
+    .info-txt h2 {
+        font-size: 6rem;
+    }
+
+    .info-picture {
+        width: 100%;
+        margin-top: 5%;
+    }
+
+    .info-picture img {
+        height: 50vh;
+    }
+    
 }
