@@ -22,7 +22,6 @@ if (titleItems.length > 0) {
         const totalSlides = titleItems.length;
         let touchStartY = 0;
 
-        
         const pagination = document.createElement('div');
         pagination.className = 'pagination';
         pagination.style.display = 'flex'; 
@@ -42,7 +41,6 @@ if (titleItems.length > 0) {
                 item.classList.toggle('active', i === index);
             });
 
-            // Mise à jour du chiffre de la pagination
             pagination.querySelector('.current').textContent = currentSlide + 1;
         }
 
@@ -73,7 +71,6 @@ if (titleItems.length > 0) {
 
     // === LE CLIC GLOBAL (Background cliquable) ===
     document.addEventListener('click', (e) => {
-        // On ne redirige pas si on clique sur le menu ou un lien déjà existant
         const isMenu = e.target.closest('nav');
         const isLink = e.target.tagName === 'A' || e.target.closest('a');
         
@@ -91,6 +88,7 @@ if (titleItems.length > 0) {
         }, 250);
     });
 }
+
 // ======================================================
 // 2. PLAYER YOUTUBE (Projets)
 // ======================================================
@@ -141,7 +139,10 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
-function onPlayerReady() { isPlayerReady = true; }
+function onPlayerReady() { 
+    isPlayerReady = true;
+    console.log('Player prêt !');
+}
 
 function onPlayerStateChange(event) {
     if (!isMobileDevice && playPauseBtn) {
@@ -158,12 +159,33 @@ function onPlayerStateChange(event) {
     }
 }
 
-// LOGIQUE DES CONTRÔLES CUSTOM (Desktop)
+// ═══════════════════════════════════════════════════════
+// CONTRÔLES DESKTOP
+// ═══════════════════════════════════════════════════════
+
 if (!isMobileDevice && container) {
     
+    //GESTION DE LA PREVIEW
+    if (videoPreview) {
+        videoPreview.addEventListener('click', () => {
+            if (!isPlayerReady) return;
+            
+            videoPreview.classList.add('hidden');
+            setTimeout(() => {
+                videoPreview.style.display = 'none';
+            }, 1500);
+            
+            player.playVideo();
+        });
+    }
+
     // Shield & Mousemove
     if(shield) {
-        shield.addEventListener("click", () => { player.pauseVideo(); });
+        shield.addEventListener("click", () => { 
+            if (!isPlayerReady) return;
+            player.pauseVideo(); 
+        });
+        
         shield.addEventListener("mousemove", () => {
             container.classList.add("show-controls");
             clearTimeout(timer);
@@ -182,7 +204,9 @@ if (!isMobileDevice && container) {
         }, 100);
     }
 
-    function stopUpdateInterval() { clearInterval(updateInterval); }
+    function stopUpdateInterval() { 
+        clearInterval(updateInterval); 
+    }
 
     const formatTime = time => {
         let m = Math.floor(time / 60);
@@ -192,7 +216,9 @@ if (!isMobileDevice && container) {
 
     const hideControls = () => {
         if (!player || player.getPlayerState() !== YT.PlayerState.PLAYING) return;
-        timer = setTimeout(() => { container.classList.remove("show-controls"); }, 3000);
+        timer = setTimeout(() => { 
+            container.classList.remove("show-controls"); 
+        }, 3000);
     }
 
     container.addEventListener("mousemove", () => {
@@ -201,18 +227,126 @@ if (!isMobileDevice && container) {
         hideControls();   
     });
 
-    // Play/Pause & Fullscreen
+    //PLAY/PAUSE avec gestion de la preview
     document.querySelector('.play-pause')?.addEventListener("click", () => {
         if (!isPlayerReady) return;
+        
+        // Cache la preview si visible
+        if (videoPreview && !videoPreview.classList.contains('hidden')) {
+            videoPreview.classList.add('hidden');
+            setTimeout(() => {
+                videoPreview.style.display = 'none';
+            }, 1500);
+        }
+        
         player.getPlayerState() === YT.PlayerState.PLAYING ? player.pauseVideo() : player.playVideo();
     });
 
+    //VOLUME
+    document.querySelector('.volume')?.addEventListener("click", () => {
+        if (!isPlayerReady) return;
+        if (player.isMuted()) {
+            player.unMute();
+            volumeBtn.classList.replace("fa-volume-xmark", "fa-volume-high");
+        } else {
+            player.mute();
+            volumeBtn.classList.replace("fa-volume-high", "fa-volume-xmark");
+        }
+    });
+
+    // TIMELINE INTERACTIVE
+    if (videoTimeline) {
+        // Clic sur timeline
+        videoTimeline.addEventListener("click", e => {
+            if (!player || !player.getDuration) return;
+            let timelineWidth = videoTimeline.clientWidth;
+            let newTime = (e.offsetX / timelineWidth) * player.getDuration();
+            player.seekTo(newTime, true);
+        });
+
+        // Drag sur timeline
+        const draggableProgressBar = e => {
+            let timelineWidth = videoTimeline.clientWidth;
+            let newTime = (e.offsetX / timelineWidth) * player.getDuration();
+            player.seekTo(newTime, true);
+        }
+
+        videoTimeline.addEventListener("mousedown", () => {
+            videoTimeline.addEventListener("mousemove", draggableProgressBar);
+        });
+        
+        document.addEventListener("mouseup", () => {
+            videoTimeline.removeEventListener("mousemove", draggableProgressBar);
+        });
+    }
+
+    // FULLSCREEN
     document.querySelector('.fullscreen')?.addEventListener("click", () => {
         if (!isPlayerReady) return;
-        if (!document.fullscreenElement) {
-            container.requestFullscreen();
-        } else {
+        
+        container.classList.toggle("fullscreen");
+        
+        if (document.fullscreenElement) {
+            fullScreenBtn.classList.replace("fa-down-left-and-up-right-to-center", "fa-up-right-and-down-left-from-center");
             document.exitFullscreen();
+        } else {
+            fullScreenBtn.classList.replace("fa-up-right-and-down-left-from-center", "fa-down-left-and-up-right-to-center");
+            container.requestFullscreen();
         }
+    });
+
+    // Gestion touche ÉCHAP pour fullscreen
+    document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) {
+            container.classList.remove('fullscreen');
+            if (fullScreenBtn) {
+                fullScreenBtn.classList.replace("fa-down-left-and-up-right-to-center", "fa-up-right-and-down-left-from-center");
+            }
+        }
+    });
+
+    // CONTRÔLES CLAVIER
+    document.addEventListener('keydown', (e) => {
+        if (!isPlayerReady) return;
+        
+        // Espace = Play/Pause
+        if (e.keyCode === 32) {
+            e.preventDefault();
+            
+            if (videoPreview && !videoPreview.classList.contains('hidden')) {
+                videoPreview.classList.add('hidden');
+            }
+            
+            player.getPlayerState() === YT.PlayerState.PLAYING ? player.pauseVideo() : player.playVideo();
+        }
+        
+        // Flèche gauche = -5 secondes
+        if (e.keyCode === 37) {
+            e.preventDefault();
+            player.seekTo(Math.max(0, player.getCurrentTime() - 5), true);
+        }
+        
+        // Flèche droite = +5 secondes
+        if (e.keyCode === 39) {
+            e.preventDefault();
+            player.seekTo(Math.min(player.getDuration(), player.getCurrentTime() + 5), true);
+        }
+    });
+}
+
+// ═══════════════════════════════════════════════════════
+// MOBILE : Preview uniquement
+// ═══════════════════════════════════════════════════════
+
+if (isMobileDevice && videoPreview) {
+    videoPreview.addEventListener('click', () => {
+        if (!isPlayerReady) return;
+        
+        videoPreview.classList.add('hidden');
+        setTimeout(() => {
+            videoPreview.style.display = 'none';
+        }, 1500);
+        
+        player.playVideo();
     });
 }
