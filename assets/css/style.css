@@ -8,7 +8,7 @@ body {
     font-family: "owners-text", sans-serif;
     font-weight: 400;
     font-style: normal;
-    height: 100vh;
+    height: 100dvh;
     position: relative;
     background-color: #FAF9F6;
 }
@@ -233,7 +233,6 @@ color: #FAF9F6;
     display: flex;
     align-items: center;
     justify-content: center;
-    
     width: 100%;
     height: auto;
     position: relative;
