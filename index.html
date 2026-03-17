@@ -3,52 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antoine Cornière</title>
-    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
-    <link rel="stylesheet" href="https://use.typekit.net/xdp4rue.css">
+    <title>Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 </head>
 <body class="home">
-    <!-- Images de fond -->
-    <div class="background active" id="bg-norway" style="background-image: url('assets/img/bg/bg-normay.jpg');"></div>
-    <div class="background inactive" id="bg-canon" style="background-image: url('assets/img/bg/block2_image.jpg');"></div>
-    <div class="background inactive" id="bg-archives" style="background-image: url('assets/img/bg/bg-archives.jpg');"></div>
+    <div class="container">
+        <!-- Section gauche -->
+        <div class="left-section">
+            <div class="logo">
+                <a href="index.html"><img src="./assets/img/Logo_SR.png" alt=""></a>
+            </div>
 
-    <div class="overlay"></div>
+            <div class="projects">
+                <div class="project-item active" data-image="image1" data-index="0">
+                    <a href="work/camara-fx2.html">
+                        <h1>Camara Title</h1>
+                        <div class="category">(Branding)</div>
+                    </a>
+                    
+                </div>
 
-    <!-- Navigation -->
-    <nav>
-        <a href="index.html">Work</a>
-         <!-- Logo -->
-        <div class="logo">
-            <a href="index.html"><img src="../assets/img/logo_V2.png" alt=""></a>
+                <div class="project-item" data-image="image2" data-index="1">
+                    <h1>Dune 86</h1>
+                    <div class="category">(Branding)</div>
+                </div>
+
+                <div class="project-item" data-image="image3" data-index="2">
+                    <h1>Project X</h1>
+                    <div class="category">(Not Branding)</div>
+                </div>
+                <div class="project-item active" data-image="image4" data-index="3">
+                    <h1>Macif</h1>
+                    <div class="category">(Branding)</div>
+                </div>
+                <div class="project-item active" data-image="image5" data-index="4">
+                    <h1>disobey.</h1>
+                    <div class="category">(Branding)</div>
+                </div>
+            </div>
+
+            <!-- Indicateur de tap pour mobile -->
+            <div class="tap-indicator">Scroll to continue →</div>
         </div>
-        <a href="info.html">Info</a>
-    </nav>
 
-    
+        <!-- Section droite avec images -->
+        <div class="right-section">
+            <nav class="nav nav-home">
+                <a href="./index.html">work</a>
+                <a href="#info">info</a>
+            </nav>
 
-    <!-- Contenu principal -->
-    <div class="content">
-        <div class="title-item active" data-bg="bg-norway">
-            <h2 id="top-title"><a href="work/camara-sony-fx2.html">Norway - Sony FX2</a></h2>
-            <span class="year-label">2026</span>
+            <!-- Images de fond -->
+            <div class="background-image active" id="image1" data-index="0"
+                 style="background-image: url('./assets/img/photo1.jpg');">
+            </div>
+            <div class="background-image" id="image2" data-index="1"
+                 style="background-image: url('./assets/img/portfolio-c65-dune.jpg');">
+            </div>
+            <div class="background-image" id="image3" data-index="2"
+                 style="background-image: url('./assets/img/drone_neige.JPG');">
+            </div>
+             <div class="background-image active" id="image4" data-index="3"
+                 style="background-image: url('./assets/img/photo1.jpg');">
+            </div>
+             <div class="background-image active" id="image5" data-index="4"
+                 style="background-image: url('./assets/img/portfolio-c65-dune.jpg');">
+            </div>
         </div>
-        <div class="title-item" data-bg="bg-canon">
-            <h2><a href="work/camara-canon-r6.html">Camara X Canon</a></h2>
-            <span class="year-label">2025</span>
-        </div>
-        <div class="title-item" data-bg="bg-archives">
-            <h2><a href="work/archives.html">Archives</a></h2>
-            <span class="year-label">2024 — ?</span>
-        </div>
-    </div>
-
-    <!-- Années -->
-    <div class="years">
-        <span class="year">2026</span>
-        <span class="year">2025</span>
-        <span class="year">2024 — ?</span>
     </div>
 
     <script src="assets/js/script.js"></script>
