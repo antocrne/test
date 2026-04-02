@@ -148,6 +148,10 @@ a {
     transition: 0.3s ease;
 }
 
+.dark a {
+    color: #11310C;
+}
+
 .tap-indicator {
     display: none;
 }
@@ -297,24 +301,94 @@ PROJECT CSS
 
 
 
-/* Responsive */
-@media (max-width: 768px) {
-    
-    .video-container {
-        margin: 100px auto 40px;
-        padding: 0 30px;
-    }
+/* ==================
+INFO PAGE CSS
+=====================
+*/
 
-    .project-info {
-        padding: 0 30px;
-    }
-
-    .project-info h1 {
-        font-size: 2rem;
-    }
-
-    
+.info-photo-section {
+    margin-top: 3%;
+    display: flex;
+    justify-content: center;
 }
+
+.info-photo-container {
+    overflow: hidden;
+    position: relative;
+    padding-top: 5%;
+}
+
+.info-photo-title h2 {
+    position: absolute;
+    top: 10%;
+    right: 0;
+    width: fit-content;
+    color: #C4C240;
+    transform: rotate(13deg);
+    font-size: 3.5rem;
+}
+
+.info-photo {
+    width: 80%;
+    margin: auto;
+}
+
+.info-photo img {
+    width: 100%;
+}
+
+.info-txt {
+    width: 60%;
+    margin: auto;
+}
+
+.info-txt p {
+    margin: 2% auto; 
+}
+
+.a-link {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.a-link:hover {
+    color: #C4C240;
+    transition: 0.3s;
+}
+
+
+.info-social {
+    width: 60%;
+    margin: auto;
+    margin-top: 4%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-social a {
+    color: #000;
+    text-decoration: none;
+}
+
+.socials {
+    margin: 0;
+}
+
+.socials a {
+    margin-left: 10px;
+}
+
+.socials a:hover {
+    color: #C4C240;
+    transition: 0.3s;
+}
+
+#email:hover {
+    color: #C4C240;
+    transition: 0.3s;
+}
+
+
 
 /* RESPONSIVE MOBILE */
 @media (max-width: 768px) {
@@ -340,8 +414,13 @@ PROJECT CSS
 
     .logo {
         left: 30px;
-        top: 30px;
+        top: 20px;
         pointer-events: auto;
+        width: 40px;
+    }
+
+    .logo-home {
+        filter: brightness(0) invert(1);
     }
 
     .nav {
@@ -355,6 +434,11 @@ PROJECT CSS
         font-size: 0.85rem;
     }
 
+    .dark a {
+        color: #11310C;
+    }
+
+
     /* Container des projets */
     .projects {
         gap: 0;
@@ -363,7 +447,7 @@ PROJECT CSS
         height: auto;
     }
 
-    /* Cacher tous les projets sauf l'actif */
+     /* Cacher tous les projets sauf l'actif */
     .project-item {
         position: absolute;
         width: 100%;
@@ -419,4 +503,116 @@ PROJECT CSS
         pointer-events: none;
         text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
     }
+
+
+    /* ==================
+     PROJECT PAGE
+     ====================
+    */
+
+    .project-txt {
+        width: 100%;
+    }
+
+    .project-description {
+        flex-wrap: wrap-reverse;
+    }
+
+    .project-details {
+        margin-bottom: 3%;
+    }
+    
+    .p-img-content {
+        width: 100%;
+       margin: auto;
+       padding: 0 30px 30px 30px;
+       
+    }
+
+    .img-landscape {
+        flex-wrap: wrap;
+        
+    }
+
+    .img-portrait {
+        flex-wrap: wrap;
+    }
+
+    .img-l {
+        padding-right: 0;
+    }
+
+    .img-r {
+       padding-left: 0;
+    }
+
+    .video-container {
+        margin: 100px auto 40px;
+        padding: 0 30px;
+    }
+
+    .project-info {
+        padding: 0 30px;
+    }
+
+    .project-info h1 {
+        font-size: 1.5rem;
+    }
+
+
+    /* ==================
+    INFO PAGE CSS
+    =====================
+    */
+
+
+    .info-photo-section {
+        margin-top: 15%;
+        
+    }
+
+    .info-photo-container {
+        
+        padding-top: 15%;
+    }
+
+    .info-photo-title h2 {
+        position: absolute;
+        top: 8%;
+        right: 5%;
+        width: fit-content;
+        color: #C4C240;
+        transform: rotate(13deg);
+        font-size: 2.5rem;
+    }
+
+    .info-photo {
+        width: 80%;
+        margin: auto;
+    }
+
+    .info-section {
+        margin-top: 5%;
+        padding-bottom: 5%;
+    }
+
+    .info-txt {
+        width: 80%;
+    }
+
+    .info-social {
+        width: 80%;
+        flex-wrap: wrap;
+        justify-content: baseline;
+    }
+
+    .socials {
+        margin-top: 10px;
+    }
+
+    .socials a {
+        margin-left: 0px;
+        margin-right: 10px;
+    }
+
 }

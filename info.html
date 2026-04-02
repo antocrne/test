@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="../assets/img/favicon.ico">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+</head>
+<body>
+     <div class="logo">
+                <a href="../index.html"><img src="../assets/img/Logo_SR.png" alt=""></a>
+    </div>
+    <nav class="nav dark">
+                <a href="../index.html">work</a>
+                <a href="#info">info</a>
+    </nav>
+
+    <div class="info-photo-section">
+        <div class="info-photo-container">
+            <div class="info-photo-title">
+                <h2>Hey you! 👋🏻</h2>
+            </div>
+            <div class="info-photo">
+                <img src="./assets/img/pp_steven.jpg" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="info-section">
+        <div class="info-txt">
+            <p>I'm Steven Roussel, an independent photographer and filmmaker based (most of the time 🌍)  in Nantes, France 🇫🇷. Sometimes content creator, social media manager or  editor… I crafted my skills with a passion for visual storytelling as a  multitool combining different mediums to create compelling narratives.</p>
+            <p>From lifestyle to landscapes with a pit stop in sports, I invite you to discover my world and its versatility ➡️ <a href="#" class="a-link">some projects.</a></p>
+            <p>I’ll be happy to chat over coffee about your next idea and project. ☕</p>
+        </div>
+        <div class="info-social">
+            <a id="email" href="mailto:hello@stevenrsl.eu" class="mailto-link"></a>
+            <div class="socials">
+                        <a href="https://www.instagram.com/stevenrsl" target="_blank">Instagram</a>
+                        <a href="#" target="_blank">Autre lien</a>
+            </div> 
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script>
+
+
+
+        // ═══════════════════════════════════════════════════════
+        // EMAIL COPY TO CLIPBOARD
+        // ═══════════════════════════════════════════════════════
+
+        $(document).ready(function() {
+
+            // Add class to mailto link
+            // Needed to separate the disabling of the default action AND copy email to clipboard
+            $('a[href^=mailto]').addClass('mailto-link');
+
+            var mailto = $('.mailto-link');
+            var messageCopy = 'hello@stevenrsl.eu';
+            var messageSuccess = 'Email address copied to clipboard';
+
+            mailto.append('<span class="mailto-message"></span>');
+            $('.mailto-message').append(messageCopy);
+
+            // Disable opening your email client. yuk.
+            $('a[href^=mailto]').click(function() {
+                return false; 
+            })
+
+            // On click, get href and remove 'mailto:' from value
+            // Store email address in a variable.
+            mailto.click(function() {
+                var href = $(this).attr('href');
+                var email = href.replace('mailto:', '');
+                copyToClipboard(email);
+                $('.mailto-message').empty().append(messageSuccess);
+                setTimeout(function() {
+                    $('.mailto-message').empty().append(messageCopy);}, 1500);
+            });
+
+        });
+
+
+        // Copies the email variable to clipboard
+        function copyToClipboard(text) {
+            var dummy = document.createElement("input");
+            document.body.appendChild(dummy);
+            dummy.setAttribute('value', text);
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+        }
+
+
+    </script>
+</body>
+</html>
