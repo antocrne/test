@@ -54,7 +54,7 @@ if (projectItems.length > 0) {
 function initMobile() {
     updateActiveProject(0);
     
-    if (tapIndicator) tapIndicator.style.display = 'none';
+    if (tapIndicator)
 
     // Écouteurs pour le swipe
     document.addEventListener('touchstart', (e) => {
