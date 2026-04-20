@@ -51,38 +51,32 @@ if (projectItems.length > 0) {
     }
 
     // --- INITIALISATION MOBILE ---
-    function initMobile() {
-        updateActiveProject(0);
-        
-        // Cache l'indicateur de tap
-        if (tapIndicator) tapIndicator.style.display = 'none';
+function initMobile() {
+    updateActiveProject(0);
+    
+    if (tapIndicator) tapIndicator.style.display = 'none';
 
-        // Écouteurs pour le swipe
-        document.addEventListener('touchstart', (e) => {
-            touchStartY = e.touches[0].clientY;
-        }, { passive: true });
+    // Écouteurs pour le swipe
+    document.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
 
-        document.addEventListener('touchend', (e) => {
-            touchEndY = e.changedTouches[0].clientY;
-            handleSwipe();
-        }, { passive: true });
-    }
+    document.addEventListener('touchend', (e) => {
+        touchEndY = e.changedTouches[0].clientY;
+        handleSwipe();
+    }, { passive: true });
 
-    // --- INITIALISATION DESKTOP ---
-    function initDesktop() {
-        projectItems.forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                const index = parseInt(this.getAttribute('data-index'));
-                updateActiveProject(index);
-            });
+    // ✅ NOUVEAU : clic sur l'image de fond -> aller vers le projet actif
+    if (rightSection) {
+        rightSection.addEventListener('click', () => {
+            const activeItem = projectItems[currentIndex];
+            const link = activeItem.querySelector('a');
+            if (link) {
+                window.location.href = link.getAttribute('href');
+            }
         });
-
-        if (leftSection) {
-            leftSection.addEventListener('mouseleave', () => {
-                updateActiveProject(0);
-            });
-        }
     }
+}
 
     // --- GESTION DU RESIZE ---
     function handleResize() {
