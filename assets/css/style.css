@@ -247,6 +247,10 @@ PROJECT CSS
     margin-top: 5%;
 }
 
+#last-video {
+    padding-bottom: 5%;
+}
+
 /* Infos projet */
 .project-info {
     width: 60%;
@@ -705,11 +709,17 @@ ERROR 404
     }
 
     .video-container {
-        margin: 100px auto 40px;
+        width: 100%;
+        margin: 50px auto 40px;
         padding: 0 30px;
     }
 
+    #header-project {
+        margin-top: 25%;
+    }
+
     .project-info {
+        width: 100%;
         padding: 0 30px;
     }
 
