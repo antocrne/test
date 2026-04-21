@@ -547,6 +547,40 @@ ERROR 404
 
 
 
+/* Tablettes larges / Petits laptops */
+@media (max-width: 1100px) {
+    .gallery-grid {
+        column-count: 3;
+    }
+}
+
+/* Tablettes portrait */
+@media (max-width: 800px) {
+    .gallery-grid {
+        column-count: 1;
+        column-gap: 15px;
+    }
+    .gallery-item {
+        margin-bottom: 15px;
+    }
+    .photo-wrapper {
+        padding: 20px 30px;
+    }
+}
+
+/* Mobiles */
+@media (max-width: 500px) {
+    .gallery-grid {
+        column-count: 1;
+    }
+
+    .photo-wrapper {
+        padding: 20px 30px;
+    }
+}
+
+
+
 /* RESPONSIVE MOBILE */
 @media (max-width: 768px) {
     .home {
@@ -727,6 +761,25 @@ ERROR 404
         font-size: 1.5rem;
     }
 
+    .work-content {
+        margin-top: 15%;
+    }
+
+
+    .photo-project-info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: none;
+        margin-bottom: 50px;
+    }   
+
+    .photo-project-txt {
+        width: 100%;
+    }
+    .client-info {
+        text-align: start;
+        margin-top: 20px;
+    }
 
 
 
