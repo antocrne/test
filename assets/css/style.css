@@ -167,9 +167,9 @@ PROJECT CSS
 
 /* Container vidéo */
 .video-container {
-    max-width: 1200px;
-    margin: 120px auto 60px;
-    padding: 0 60px;
+    width: 60%;
+    margin: 0px auto 100px;
+    padding: 0 0px;
 }
 
 .player-wrapper {
@@ -243,17 +243,25 @@ PROJECT CSS
    
 }
 
+#header-project {
+    margin-top: 5%;
+}
+
 /* Infos projet */
 .project-info {
-    max-width: 1200px;
-    margin: 60px auto;
-    padding: 0 60px;
+    width: 60%;
+    margin: 40px auto;
+    
 }
 
 .project-info h1 {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     text-transform: uppercase;
     margin-bottom: 30px;
+}
+.project-info h2 {
+
+    margin-bottom: 10px;
 }
 
 .project-description {
@@ -263,6 +271,10 @@ PROJECT CSS
 
 .project-txt {
     width: 60%;
+}
+
+.project-details {
+    line-height: 25px;
 }
 
 
