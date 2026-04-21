@@ -300,6 +300,71 @@ PROJECT CSS
 }
 
 
+.work-content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.photo-wrapper {
+    padding: 20px 60px;
+    max-width: 3000px;
+    /*--- max-width: 1600px; --*/
+    margin: 5% auto;
+}
+
+.photo-project-header h1 {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+.photo-project-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.photo-project-txt {
+    width: 30%;
+}
+
+.client-info {
+    text-align: end;
+}
+
+
+/* --- Gallery Grid (Masonry Effect) --- */
+.gallery-grid {
+    /* On définit 4 colonnes */
+    column-count: 4;
+    /* L'espace horizontal entre les colonnes */
+    column-gap: 20px;
+}
+
+.gallery-item {
+    /* Empêche l'image de se scinder entre deux colonnes */
+    break-inside: avoid;
+    margin-bottom: 20px; /* L'espace vertical */
+    width: 100%;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* Optionnel : adoucir le rendu */
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+
+
+
+
 
 /* ==================
 INFO PAGE CSS
