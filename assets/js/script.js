@@ -51,7 +51,7 @@ if (projectItems.length > 0) {
         updateActiveProject(0);
 
         // 
-        if (tapIndicator) tapIndicator.style.display = 'none';
+        if (tapIndicator);
 
         document.addEventListener('touchstart', (e) => {
             touchStartY = e.touches[0].clientY;
