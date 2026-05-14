@@ -486,11 +486,6 @@ ERROR 404
   overflow: hidden;
 }
 
-.error-container {
-  text-align: center;
- 
-}
-
 .error-elements {
     display: flex;
     flex-direction: column;
@@ -799,15 +794,7 @@ ERROR 404
         padding-top: 15%;
     }
 
-    .info-photo-title h2 {
-        position: absolute;
-        top: 8%;
-        right: 5%;
-        width: fit-content;
-        color: #C4C240;
-        transform: rotate(13deg);
-        font-size: 2.5rem;
-    }
+   
 
     .info-photo {
         width: 80%;

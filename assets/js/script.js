@@ -50,8 +50,6 @@ if (projectItems.length > 0) {
     function initMobile() {
         updateActiveProject(0);
 
-        // 
-        if (tapIndicator);
 
         document.addEventListener('touchstart', (e) => {
             touchStartY = e.touches[0].clientY;
