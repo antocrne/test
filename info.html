@@ -9,39 +9,68 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
      <div class="logo">
                 <a href="./index.html"><img src="./assets/img/Logo_SR.png" alt=""></a>
     </div>
     <nav class="nav dark">
-                <a href="./index.html">work</a>
-                <a href="./info.html">info</a>
+                <a href="./index.html" data-i18n="nav_work">work</a>
+                <a href="./info.html" data-i18n="nav_info">info</a>
+                <button class="lang-switcher" id="lang-switcher">FR</button>
     </nav>
 
-    <div class="info-photo-section">
-        <div class="info-photo-container">
-            
+    <div class="info-container">
+        <div class="info-left">
             <div class="info-photo">
-                <img src="./assets/img/pp_steven.jpg" alt="">
+                <img src="./assets/img/pp_steven.jpg" alt="Steven Roussel">
+            </div>
+            <div class="info-identity">
+                <h1 class="info-name">Steven Roussel</h1>
+                <p class="info-role" data-i18n="info_role">Photographer & Filmmaker</p>
+                <p class="info-location">Paris, France 🇫🇷</p>
+            </div>
+        </div>
+
+        <div class="info-right">
+            <div class="info-txt">
+                <p data-i18n="info_txt1">I'm Steven Roussel, an independent photographer and filmmaker based (most of the time 🌍)  in Paris, France 🇫🇷. Sometimes content creator, social media manager or  editor… I crafted my skills with a passion for visual storytelling as a  multitool combining different mediums to create compelling narratives.</p>
+                <p data-i18n="info_txt2">From lifestyle to landscapes with a pit stop in sports, I invite you to discover my world and its versatility ➡️ <a href="index.html" class="a-link">some projects.</a></p>
+                <p data-i18n="info_txt3">I'll be happy to chat over coffee about your next idea and project. ☕</p>
+            </div>
+
+            <div class="info-tags">
+                <span class="info-tag" data-i18n="tag_photo">Photographie</span>
+                <span class="info-tag" data-i18n="tag_video">Vidéo</span>
+                <span class="info-tag" data-i18n="tag_da">Direction artistique</span>
+                <span class="info-tag blush" data-i18n="tag_stock">Stock media</span>
+                <span class="info-tag lavender">YouTube</span>
+                <span class="info-tag coffee" data-i18n="tag_coffee">Coffee addict</span>
+            </div>
+
+            <div class="info-gear">
+                <h3 class="info-gear-title" data-i18n="gear_title">Equipment used</h3>
+                <div class="info-gear-list">
+                    <div class="info-gear-item"><span class="gear-dot"></span>Sony A7 IV<span class="gear-category" data-i18n="gear_main">Boîtier principal</span></div>
+                    <div class="info-gear-item"><span class="gear-dot"></span>Sony A7S III<span class="gear-category" data-i18n="gear_video">Vidéo / low-light</span></div>
+                    <div class="info-gear-item"><span class="gear-dot"></span>FE 35mm f/1.4 GM<span class="gear-category" data-i18n="gear_signature">Objectif signature</span></div>
+                    <div class="info-gear-item"><span class="gear-dot"></span>FE 85mm f/1.4 GM<span class="gear-category" data-i18n="gear_portrait">Portrait & lifestyle</span></div>
+                    <div class="info-gear-item"><span class="gear-dot"></span>FE 24–70mm f/2.8 GM II<span class="gear-category" data-i18n="gear_versatile">Polyvalent</span></div>
+                    <div class="info-gear-item"><span class="gear-dot"></span>DJI RS 3 Pro · DJI Mic 2<span class="gear-category" data-i18n="gear_stab">Stabilisation & son</span></div>
+                </div>
+            </div>
+
+            <div class="info-social">
+                <a id="email" href="mailto:hello@stevenrsl.eu" class="mailto-link"></a>
+                <div class="socials">
+                    <a href="https://www.instagram.com/stevenrsl" target="_blank">Instagram</a>
+                    <a href="https://www.linkedin.com/in/stevenrsl/" target="_blank">LinkedIn</a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="info-section">
-        <div class="info-txt">
-            <p>I'm Steven Roussel, an independent photographer and filmmaker based (most of the time 🌍)  in Paris, France 🇫🇷. Sometimes content creator, social media manager or  editor… I crafted my skills with a passion for visual storytelling as a  multitool combining different mediums to create compelling narratives.</p>
-            <p>From lifestyle to landscapes with a pit stop in sports, I invite you to discover my world and its versatility ➡️ <a href="index.html" class="a-link">some projects.</a></p>
-            <p>I’ll be happy to chat over coffee about your next idea and project. ☕</p>
-        </div>
-        <div class="info-social">
-            <a id="email" href="mailto:hello@stevenrsl.eu" class="mailto-link"></a>
-            <div class="socials">
-                        <a href="https://www.instagram.com/stevenrsl" target="_blank">Instagram</a>
-                        <a href="https://www.linkedin.com/in/stevenrsl/" target="_blank">LinkedIn</a>
-            </div> 
-        </div>
-    </div>
+
     <script src="./assets/js/script.js"></script>
     <script>
         (function () {

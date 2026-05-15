@@ -1,15 +1,124 @@
+/* ==========================================
+   FONT DECLARATIONS — local files only
+   ========================================== */
+@font-face {
+    font-family: 'New York';
+    src: url('../font/NewYork PERSONAL USE.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Zalando Sans';
+    src: url('../font/ZalandoSans-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Zalando Sans';
+    src: url('../font/ZalandoSans-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Zalando Sans';
+    src: url('../font/ZalandoSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Zalando Sans';
+    src: url('../font/ZalandoSans-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Zalando Sans';
+    src: url('../font/ZalandoSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Zalando Sans';
+    src: url('../font/ZalandoSans-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Zalando Sans';
+    src: url('../font/ZalandoSans-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Zalando Sans';
+    src: url('../font/ZalandoSans-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Zalando Sans';
+    src: url('../font/ZalandoSans-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ==========================================
+   DESIGN TOKENS
+   ========================================== */
+:root {
+    --cream:        #F7F5F0;
+    --cream-dim:    #EEEBE3;
+    --forest:       #1D3D2A;
+    --forest-mid:   #2E5C40;
+    --sage:         #6B7F5E;
+    --sage-light:   #A8BF9A;
+    --stone:        #9C9585;
+    --citron:       #C8D44E;
+    --citron-hi:    #D9E65A;
+    --mist:         #E0EDE0;
+    --blush:        #EDD5CE;
+    --lavender:     #D8D0E8;
+    --sand:         #E8DFC8;
+    --font-display: 'New York', Georgia, serif;
+    --font-body:    'Zalando Sans', system-ui, sans-serif;
+}
+
+/* ==========================================
+   RESET & BASE
+   ========================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-
 body {
-    font-family: "Zalando Sans SemiExpanded", sans-serif;
-    
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    background: var(--cream);
+    color: var(--forest);
+    -webkit-font-smoothing: antialiased;
     height: 100vh;
-    color: #11310C;
 }
 
 .home {
@@ -18,27 +127,44 @@ body {
 
 a {
     text-decoration: none;
-    color: #11310C;
+    color: var(--forest);
 }
 
-.container {
-    display: flex;
-    height: 100vh;
-    position: relative;
+/* ==========================================
+   HOME — FULLSCREEN LAYOUT
+   ========================================== */
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    z-index: 1;
+    filter: brightness(82%);
 }
 
-/* Section gauche avec les titres */
-.left-section {
-    width: 50%;
-    background: white;
-    padding: 60px 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
+.background-image.active {
+    opacity: 1;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.18);
     z-index: 2;
+    pointer-events: none;
 }
 
+/* ==========================================
+   LOGO
+   ========================================== */
 .logo {
     width: 50px;
     position: absolute;
@@ -58,70 +184,87 @@ a {
     transform: rotate(180deg);
 }
 
-.projects {
-    flex: 1;
+.logo-home {
+    position: fixed;
+    z-index: 100;
+    filter: brightness(0) invert(1);
+}
+
+/* ==========================================
+   HOME — PROJECT LIST
+   ========================================== */
+.content {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    gap: 40px;
+    padding-left: 48px;
+    padding-bottom: 40px;
 }
 
 .project-item {
+    margin: 15px 0 0;
     cursor: pointer;
     transition: all 0.3s ease;
-    position: relative;
-    display: flex;
 }
 
 .project-item a {
     display: flex;
+    align-items: baseline;
+    gap: 14px;
 }
 
 .project-item h1 {
-    font-size: 3.5rem;
+    font-family: var(--font-body);
     font-weight: 800;
+    font-size: 42px;
     line-height: 1;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    margin: 0;
+    color: rgba(247, 245, 240, 0.35);
+    transition: all 0.3s ease;
 }
 
-.project-item .category {
-    
-    font-size: 0.8rem;
-    color: #C4C240;
-    margin-top: 10px;
-    margin-left: 10px;
-    transition: opacity 0.3s ease;
+.project-item.active h1 {
+    color: #F7F5F0;
+    font-size: 52px;
 }
 
 .project-item:hover h1 {
-    transform: translateY(-5px);
+    color: rgba(247, 245, 240, 0.75);
 }
 
-/* Section droite avec les images */
-.right-section {
-    width: 50%;
-    position: relative;
-    overflow: hidden;
-    background: #000;
+.project-item.active:hover h1 {
+    color: #F7F5F0;
 }
 
-.background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 0.6s ease;
+.cat-label {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(247, 245, 240, 0.50);
+    letter-spacing: 0.03em;
+    transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
-.background-image.active {
-    opacity: 1;
+.project-item.active .cat-label {
+   color: var(--citron);
 }
 
-/* Navigation en haut à droite */
+.project-item:hover .cat-label {
+    color: var(--citron);
+}
+
+.tap-indicator {
+    display: none;
+}
+
+/* ==========================================
+   NAVIGATION
+   ========================================== */
 .nav {
     position: absolute;
     top: 40px;
@@ -131,50 +274,128 @@ a {
     z-index: 10;
 }
 
-.nav-home a {
-    color: #eeeeee;
+/* Base nav link styles (dark pages) */
+.nav a,
+.dark .lang-switcher {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--forest);
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    transition: color 200ms ease;
 }
 
-.nav a {
-    
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: 0.3s ease;
+.nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--citron);
+    transition: width 200ms ease;
+}
+
+.nav a:hover::after {
+    width: 100%;
 }
 
 .nav a:hover {
-    color: #C4C240;
-    transition: 0.3s ease;
+    color: var(--citron);
 }
 
+/* Dark-class nav (project & info pages) */
 .dark a {
-    color: #11310C;
+    color: var(--forest);
+}
+
+/* Nav on homepage — fixed above fullscreen backgrounds */
+.nav-home {
+    position: fixed;
+    z-index: 100;
+}
+
+.nav-home a {
+    color: var(--cream);
+}
+
+.nav-home a::after {
+     background: var(--citron);
+}
+
+.nav-home a:hover {
+   color: var(--citron);
+}
+
+/* Lang switcher button */
+.lang-switcher {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    transition: color 200ms ease;
+    color: var(--forest);
+}
+
+.lang-switcher::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--citron);
+    transition: width 200ms ease;
+}
+
+.lang-switcher:hover::after {
+    width: 100%;
+}
+
+.lang-switcher:hover {
+    color:  var(--citron);
+}
+
+/* Switcher on dark photo overlay */
+.nav-home .lang-switcher {
+    color: #eeeeee;
+}
+
+.nav-home .lang-switcher::after {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.nav-home .lang-switcher:hover {
+    color:  var(--citron);
 }
 
 .tap-indicator {
     display: none;
 }
 
-/* 
-=========================
-PROJECT CSS
-=========================
-*/
+/* ==========================================
+   PROJECT PAGES — VIDEO LAYOUT
+   ========================================== */
 
-
-
-
-/* Container vidéo */
+/* Video container */
 .video-container {
     width: 60%;
-    margin: 0px auto 100px;
-    padding: 0 0px;
+    margin: 0 auto 100px;
 }
 
 .player-wrapper {
     position: relative;
-    padding-top: 56.25%; /* Ratio 16:9 */
+    padding-top: 56.25%;
     background: #000;
 }
 
@@ -191,7 +412,7 @@ PROJECT CSS
     height: 100%;
 }
 
-/* Preview (miniature + bouton play) */
+/* Video preview (thumbnail + play) */
 .video-preview {
     position: absolute;
     top: 0;
@@ -230,7 +451,7 @@ PROJECT CSS
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .play-button-preview i {
@@ -240,7 +461,6 @@ PROJECT CSS
 
 .video-preview:hover .play-button-preview {
     transform: scale(1.1);
-   
 }
 
 #header-project {
@@ -251,21 +471,32 @@ PROJECT CSS
     padding-bottom: 5%;
 }
 
-/* Infos projet */
+/* Project info block */
 .project-info {
     width: 60%;
     margin: 40px auto;
-    
 }
 
 .project-info h1 {
+    font-family: var(--font-display);
     font-size: 3.5rem;
+    font-weight: normal;
+    line-height: 1;
+    letter-spacing: -0.01em;
     text-transform: uppercase;
+    color: var(--forest);
     margin-bottom: 30px;
+    -webkit-text-stroke: 0.5px var(--forest);
 }
-.project-info h2 {
 
+.project-info h2 {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: normal;
+    line-height: 1.2;
+    color: var(--forest);
     margin-bottom: 10px;
+    -webkit-text-stroke: 0.5px var(--forest);
 }
 
 .project-description {
@@ -274,14 +505,29 @@ PROJECT CSS
 }
 
 .project-txt {
-    width: 60%;
+    width: 80%;
+    padding-right: 5%;
+}
+
+.project-txt p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--forest);
+    
 }
 
 .project-details {
-    line-height: 25px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--stone);
 }
 
+.project-details strong {
+    color: var(--forest);
+    font-weight: 500;
+}
 
+/* Image blocks */
 .p-img-content {
     width: 60%;
     margin: auto;
@@ -291,17 +537,17 @@ PROJECT CSS
 .img-work {
     width: 100%;
     margin-top: 15px;
-
 }
 
 .img-work img {
     width: 100%;
+    border-radius: 2px;
+    display: block;
 }
 
 .img-landscape {
     display: flex;
 }
-
 
 .img-portrait {
     display: flex;
@@ -315,27 +561,30 @@ PROJECT CSS
     padding-left: 7.5px;
 }
 
-
 .work-content {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-
-
+/* ==========================================
+   PROJECT PAGES — PHOTO / GALLERY LAYOUT
+   ========================================== */
 .photo-wrapper {
     padding: 20px 60px;
     max-width: 3000px;
-    /*--- max-width: 1600px; --*/
     margin: 5% auto;
 }
 
 .photo-project-header h1 {
+    font-family: var(--font-display);
     font-size: 2.5rem;
+    font-weight: normal;
+    line-height: 1;
+    letter-spacing: -0.01em;
     text-transform: uppercase;
+    color: var(--forest);
     margin-bottom: 40px;
-    font-weight: 700;
 }
 
 .photo-project-info {
@@ -345,26 +594,33 @@ PROJECT CSS
 }
 
 .photo-project-txt {
-    width: 30%;
+    width: 50%;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--forest);
 }
 
 .client-info {
     text-align: end;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--stone);
 }
 
+.client-info strong {
+    color: var(--forest);
+    font-weight: 500;
+}
 
-/* --- Gallery Grid (Masonry Effect) --- */
+/* Gallery grid — masonry */
 .gallery-grid {
-    /* On définit 4 colonnes */
     column-count: 4;
-    /* L'espace horizontal entre les colonnes */
     column-gap: 20px;
 }
 
 .gallery-item {
-    /* Empêche l'image de se scinder entre deux colonnes */
     break-inside: avoid;
-    margin-bottom: 20px; /* L'espace vertical */
+    margin-bottom: 20px;
     width: 100%;
 }
 
@@ -372,118 +628,264 @@ PROJECT CSS
     width: 100%;
     height: auto;
     display: block;
-    /* Optionnel : adoucir le rendu */
+    border-radius: 2px;
     transition: opacity 0.4s ease;
     pointer-events: none;
 }
 
-
-
-
-
-
-/* ==================
-INFO PAGE CSS
-=====================
-*/
-
-.info-photo-section {
-    margin-top: 3%;
-    display: flex;
-    justify-content: center;
-}
-
-.info-photo-container {
-    overflow: hidden;
-    position: relative;
-    padding-top: 5%;
-}
-
-.info-photo-title h2 {
-    position: absolute;
-    top: 10%;
-    right: 0;
-    width: fit-content;
-    color: #C4C240;
-    transform: rotate(13deg);
-    font-size: 3.5rem;
+/* ==========================================
+   INFO PAGE — two-column layout
+   ========================================== */
+.info-container {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 48px;
+    align-items: start;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 220px 48px 64px;
 }
 
 .info-photo {
-    width: 80%;
-    margin: auto;
+    width: 100%;
 }
 
 .info-photo img {
     width: 100%;
+    border-radius: 4px;
+    display: block;
+}
+
+.info-identity {
+    margin-top: 16px;
+}
+
+.info-name {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: normal;
+    color: var(--forest);
+    margin-bottom: 2px;
+    -webkit-text-stroke: 0.3px var(--forest);
+}
+
+.info-role {
+    font-size: 13px;
+    color: var(--sage);
+    margin-bottom: 1px;
+}
+
+.info-location {
+    font-size: 12px;
+    color: var(--stone);
 }
 
 .info-txt {
-    width: 60%;
-    margin: auto;
+    width: 100%;
+    margin: 0;
 }
 
 .info-txt p {
-    margin: 2% auto; 
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--forest);
+    margin: 0 0 16px;
 }
 
 .a-link {
     text-decoration: underline;
     text-underline-offset: 5px;
+    color: var(--forest);
+    transition: color 200ms ease;
 }
 
 .a-link:hover {
-    color: #C4C240;
-    transition: 0.3s;
+    color: var(--sage);
 }
 
+/* Tags / chips */
+.info-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
 
+.info-tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    background: var(--mist);
+    color: var(--sage);
+    transition: background 200ms ease, color 200ms ease;
+}
+
+.info-tag:hover {
+    background: var(--citron);
+    color: var(--forest);
+}
+
+.info-tag.blush { background: var(--blush); color: var(--forest); }
+.info-tag.lavender { background: var(--lavender); color: var(--forest); }
+.info-tag.coffee { background: var(--stone); color: var(--cream); }
+
+/* Gear / equipment section */
+.info-gear {
+    margin: 24px 0;
+}
+
+.info-gear-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(29, 61, 42, 0.08);
+}
+
+.info-gear-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.info-gear-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--forest);
+}
+
+.gear-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--citron);
+    flex-shrink: 0;
+}
+
+.gear-category {
+    color: var(--stone);
+    margin-left: auto;
+    font-size: 11px;
+}
+
+/* Social footer row */
 .info-social {
-    width: 60%;
-    margin: auto;
-    margin-top: 4%;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(29, 61, 42, 0.10);
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .info-social a {
-    color: #000;
+    color: var(--forest);
     text-decoration: none;
+    font-size: 13px;
 }
 
 .socials {
     margin: 0;
+    display: flex;
+    gap: 16px;
 }
 
 .socials a {
-    margin-left: 10px;
+    margin-left: 0;
+    color: var(--forest);
+    font-size: 13px;
+    position: relative;
+    display: inline-block;
+    transition: color 200ms ease;
+}
+
+.socials a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--sage);
+    transition: width 200ms ease;
+}
+
+.socials a:hover::after {
+    width: 100%;
 }
 
 .socials a:hover {
-    color: #C4C240;
-    transition: 0.3s;
+    color: var(--sage);
+}
+
+#email {
+    font-size: 13px;
+    color: var(--forest);
+    position: relative;
+    display: inline-block;
+    transition: color 200ms ease;
+}
+
+#email::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--sage);
+    transition: width 200ms ease;
+}
+
+#email:hover::after {
+    width: 100%;
 }
 
 #email:hover {
-    color: #C4C240;
-    transition: 0.3s;
+    color: var(--sage);
 }
 
+/* ==========================================
+   GEAR CAPTIONS — under image blocks
+   ========================================== */
+.gear-caption {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-style: italic;
+    color: var(--stone);
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
 
-/*
-=================
-ERROR 404
-=================
-*/
+.gear-caption .cap-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--citron);
+    flex-shrink: 0;
+}
 
+/* ==========================================
+   404 PAGE
+   ========================================== */
 .error-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  height: 90vh;
-  overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 90vh;
+    overflow: hidden;
 }
 
 .error-elements {
@@ -492,37 +894,28 @@ ERROR 404
 }
 
 .error-elements img {
-  width: 10%;
-  margin: auto;
-  animation: rotate-animation 10s infinite linear;
-  /*filter: brightness(0) invert(1);*/
-  
+    width: 10%;
+    margin: auto;
+    animation: rotate-animation 10s infinite linear;
 }
 
 @keyframes rotate-animation {
-	0% {
-		transform: rotate(0deg);
-  }
-  50% {
-		transform: rotate(180deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
+    0%   { transform: rotate(0deg); }
+    50%  { transform: rotate(180deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .error-elements a {
     color: #fff;
-  font-size: 1.5rem;
-  text-decoration: underline;
-  text-underline-offset: 5px;
-  transition: 0.3s;
-  margin-top: 2%;
+    font-size: 1.5rem;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    transition: color 0.3s ease;
+    margin-top: 2%;
 }
 
 .error-elements a:hover {
-    color: #C4C240;
-    transition: 0.3s;
+    color: var(--citron);
 }
 
 .bg-404 {
@@ -540,16 +933,18 @@ ERROR 404
     background-size: cover;
 }
 
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
 
-
-/* Tablettes larges / Petits laptops */
+/* Large tablets / small laptops */
 @media (max-width: 1100px) {
     .gallery-grid {
         column-count: 3;
     }
 }
 
-/* Tablettes portrait */
+/* Tablet portrait */
 @media (max-width: 800px) {
     .gallery-grid {
         column-count: 1;
@@ -563,125 +958,101 @@ ERROR 404
     }
 }
 
-/* Mobiles */
+/* Small mobile */
 @media (max-width: 500px) {
     .gallery-grid {
         column-count: 1;
     }
-
     .photo-wrapper {
         padding: 20px 30px;
     }
 }
 
-
-
-/* RESPONSIVE MOBILE */
+/* Mobile — main breakpoint */
 @media (max-width: 768px) {
     .home {
         overflow: hidden;
     }
 
-    .container {
-        flex-direction: column;
-    }
-
-    /* Section gauche en mobile */
-    .left-section {
-        width: 100%;
-        height: 100vh;
-        padding: 100px 30px 80px;
-        background: transparent;
-        justify-content: center;
-        position: relative;
-        z-index: 2;
-        pointer-events: none;
-    }
-
     .logo {
         left: 30px;
         top: 20px;
-        pointer-events: auto;
         width: 40px;
-    }
-
-    .logo-home {
-        filter: brightness(0) invert(1);
     }
 
     .nav {
         top: 30px;
         right: 30px;
-        pointer-events: auto;
     }
 
-    .nav a {
+    .nav a,
+    .nav-home a,
+    .nav-home .lang-switcher {
         color: #eeeeee;
         font-size: 0.85rem;
     }
 
-    .dark a {
-        color: #11310C;
+    .dark a,
+    .dark .lang-switcher {
+        color: var(--forest);
     }
 
-
-    /* Container des projets */
-    .projects {
-        gap: 0;
-        align-items: flex-start;
-        position: relative;
-        height: auto;
+    /* Content becomes full-screen carousel container */
+    .content {
+        height: 100vh;
+        width: 100%;
+        padding: 0;
+        display: block;
+        position: fixed;
+        top: 0;
+        overflow: hidden;
     }
 
-     /* Cacher tous les projets sauf l'actif */
+    /* Each project fills the screen; only .active is visible */
     .project-item {
         position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 0 70px 120px 30px;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.5s ease;
-        display: block;
+        margin: 0;
     }
 
     .project-item.active {
         opacity: 1;
-        position: relative;
         pointer-events: auto;
-    }
-
-    .project-item h1 {
-        color: #eeeeee;
-        font-size: 2.5rem;
-    }
-
-    .project-item .category {
-        font-size: 0.75rem;
-        margin-left: 0;
-        margin-top: 8px;
-        color: #eeeeee;
+        z-index: 3;
     }
 
     .project-item a {
         display: flex;
         flex-direction: column;
+        gap: 6px;
     }
 
-    /* Section droite - fullscreen en mobile */
-    .right-section {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        z-index: 1;
-        cursor: pointer;
+    .project-item h1 {
+        color: #F7F5F0;
+        font-size: 2.5rem;
     }
 
-    .background-image {
-        transition: opacity 0.5s ease;
+    .project-item.active h1 {
+        color: #F7F5F0;
+        font-size: 2.5rem;
     }
 
-    /* Indicateur visuel de navigation (optionnel) */
+    .cat-label {
+        color: rgba(247, 245, 240, 0.75);
+        font-size: 14px;
+        white-space: normal;
+    }
+
     .tap-indicator {
         display: block;
         position: fixed;
@@ -695,12 +1066,7 @@ ERROR 404
         text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
     }
 
-
-    /* ==================
-     PROJECT PAGE
-     ====================
-    */
-
+    /* Project page — mobile */
     .project-txt {
         width: 100%;
     }
@@ -712,17 +1078,15 @@ ERROR 404
     .project-details {
         margin-bottom: 3%;
     }
-    
+
     .p-img-content {
         width: 100%;
-       margin: auto;
-       padding: 0 30px 30px 30px;
-       
+        margin: auto;
+        padding: 0 30px 30px 30px;
     }
 
     .img-landscape {
         flex-wrap: wrap;
-        
     }
 
     .img-portrait {
@@ -734,7 +1098,7 @@ ERROR 404
     }
 
     .img-r {
-       padding-left: 0;
+        padding-left: 0;
     }
 
     .video-container {
@@ -760,71 +1124,52 @@ ERROR 404
         margin-top: 15%;
     }
 
-
     .photo-project-info {
         display: flex;
         flex-wrap: wrap;
-        justify-content: none;
         margin-bottom: 50px;
-    }   
+    }
 
     .photo-project-txt {
         width: 100%;
     }
+
     .client-info {
         text-align: start;
         margin-top: 20px;
     }
 
-
-
-    /* ==================
-    INFO PAGE CSS
-    =====================
-    */
-
-
-    .info-photo-section {
-        margin-top: 15%;
-        
+    /* Info page — mobile */
+    .info-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 100px 30px 40px;
     }
 
-    .info-photo-container {
-        
-        padding-top: 15%;
+    .info-left {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
     }
-
-   
 
     .info-photo {
-        width: 80%;
-        margin: auto;
+        width: 140px;
+        flex-shrink: 0;
     }
 
-    .info-section {
-        margin-top: 5%;
-        padding-bottom: 5%;
-    }
-
-    .info-txt {
-        width: 80%;
+    .info-identity {
+        margin-top: 0;
     }
 
     .info-social {
-        width: 80%;
-        flex-wrap: wrap;
-        justify-content: baseline;
+        justify-content: space-between;
     }
 
     .socials {
-        margin-top: 10px;
+        margin-top: 0;
     }
 
-    .socials a {
-        margin-left: 0px;
-        margin-right: 10px;
-    }
-
+    /* 404 — mobile */
     .error-elements {
         margin: 2%;
     }
@@ -834,23 +1179,18 @@ ERROR 404
     }
 
     .error-elements a {
-    font-size: 1rem;
-    
+        font-size: 1rem;
     }
-
 }
 
 @media (max-width: 414px) {
-
     .project-item a {
         display: flex;
         flex-direction: column;
     }
 
     .info-social {
-        width: 80%;
-        flex-direction: column;
+        width: 100%;
+        
     }
-
-
 }

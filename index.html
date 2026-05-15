@@ -6,7 +6,7 @@
     <meta name="description" content="Personal website of Steven Roussel. Freelance Content Creator &amp; Manager based in Nantes, France.">
     <meta name="author" content="Steven Roussel - stevenroussel.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
+
     <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,82 +14,64 @@
     <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 </head>
 <body class="home">
-    <div class="container">
-        <!-- Section gauche -->
-        <div class="left-section">
-            <div class="logo logo-home">
-                <a href="index.html"><img src="./assets/img/Logo_SR.png" alt=""></a>
-            </div>
 
-            <div class="projects">
-                <div class="project-item active" data-image="image1" data-index="0">
-                    <a href="work/camara-france.html">
-                        <h1>Camara France</h1>
-                        <div class="category">(Branding)</div>
-                    </a>
-                    
-                </div>
+    <div class="background-image active" id="image1" data-index="0"
+         style="background-image: url('./assets/img/photo1.jpg');"></div>
+    <div class="background-image" id="image2" data-index="1"
+         style="background-image: url('./assets/img/portfolio-c65-dune.jpg');"></div>
+    <div class="background-image" id="image3" data-index="2"
+         style="background-image: url('./assets/img/work/panasonic/240620_SR_SwimmingPool_Panasonic_150.jpg');"></div>
+    <div class="background-image" id="image4" data-index="3"
+         style="background-image: url('./assets/img/bg/bg-macif.jpg');"></div>
+    <div class="background-image" id="image5" data-index="4"
+         style="background-image: url('./assets/img/bg/bg-nantais-temp.jpg');"></div>
 
-                <div class="project-item" data-image="image2" data-index="1">
-                    <a href="work/c65dune.html">
-                        <h1>C65 Dune</h1>
-                        <div class="category">(Life Style & Branding)</div>
-                    </a> 
-                </div>
+    <div class="overlay"></div>
 
-                <div class="project-item" data-image="image3" data-index="2">
-                     <a href="work/panasonic.html">
-                        <h1>Panasonic</h1>
-                        <div class="category">(Events Photography)</div>
-                     </a>
-                        
-                   
-                </div>
-                <div class="project-item" data-image="image4" data-index="3">
-                    <a href="work/macif.html">
-                        <h1>Macif</h1>
-                        <div class="category">(Sport)</div>
-                    </a>
-                    
-                </div>
-                <div class="project-item" data-image="image5" data-index="4">
-                    <a href="work/les-nantais.html">
-                        <h1>Les Nantais</h1>
-                        <div class="category">(Food & Events)</div>
-                    </a>
-                    
-                </div>
-            </div>
+    <div class="logo logo-home">
+        <a href="index.html"><img src="./assets/img/Logo_SR.png" alt=""></a>
+    </div>
 
-            <!-- Indicateur de tap pour mobile -->
-            <div class="tap-indicator">↓</div>
+    <nav class="nav nav-home">
+        <a href="./index.html" data-i18n="nav_work">work</a>
+        <a href="./info.html" data-i18n="nav_info">info</a>
+        <button class="lang-switcher" id="lang-switcher">FR</button>
+    </nav>
+
+    <div class="content">
+        <div class="project-item active" data-index="0">
+            <a href="work/camara-france.html">
+                <h1>Camara France</h1>
+                <span class="cat-label" data-i18n="cat_branding">(Branding)</span>
+            </a>
         </div>
-
-        <!-- Section droite avec images -->
-        <div class="right-section">
-            <nav class="nav nav-home">
-                <a href="./index.html">work</a>
-                <a href="./info.html">info</a>
-            </nav>
-
-            <!-- Images de fond -->
-            <div class="background-image active" id="image1" data-index="0"
-                 style="background-image: url('./assets/img/photo1.jpg');">
-            </div>
-            <div class="background-image" id="image2" data-index="1"
-                 style="background-image: url('./assets/img/portfolio-c65-dune.jpg');">
-            </div>
-            <div class="background-image" id="image3" data-index="2"
-                 style="background-image: url('./assets/img/work/panasonic/240620_SR_SwimmingPool_Panasonic_150.jpg');">
-            </div>
-             <div class="background-image" id="image4" data-index="3"
-                 style="background-image: url('./assets/img/bg/bg-macif.jpg');">
-            </div>
-             <div class="background-image" id="image5" data-index="4"
-                 style="background-image: url('./assets/img/bg/bg-nantais-temp.jpg');">
-            </div>
+        <div class="project-item" data-index="1">
+            <a href="work/c65dune.html">
+                <h1>C65 Dune</h1>
+                <span class="cat-label" data-i18n="cat_lifestyle">(Life Style &amp; Branding)</span>
+            </a>
+        </div>
+        <div class="project-item" data-index="2">
+            <a href="work/panasonic.html">
+                <h1>Panasonic</h1>
+                <span class="cat-label" data-i18n="cat_events">(Events Photography)</span>
+            </a>
+        </div>
+        <div class="project-item" data-index="3">
+            <a href="work/macif.html">
+                <h1>Macif</h1>
+                <span class="cat-label" data-i18n="cat_sport">(Sport)</span>
+            </a>
+        </div>
+        <div class="project-item" data-index="4">
+            <a href="work/les-nantais.html">
+                <h1>Les Nantais</h1>
+                <span class="cat-label" data-i18n="cat_food">(Food &amp; Events)</span>
+            </a>
         </div>
     </div>
+
+    <div class="tap-indicator">↓</div>
 
     <script src="assets/js/script.js"></script>
 </body>
